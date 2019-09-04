@@ -1,0 +1,236 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<XnaContent xmlns:Pipeline="Microsoft.Xna.Framework.Content.Pipeline">
+  <Asset Type="Pipeline:BuildItemCollection">
+    <Item>
+      <Source>Backgrounds\Background.png</Source>
+      <Name>Backgrounds\Background</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+      <Options>None</Options>
+      <Output>D:\Kuess\Final Project\Kuessaria\Kuessaria\Kuessaria\bin\x86\Debug\Content\Backgrounds\Background.xnb</Output>
+      <Time>2016-06-09T14:23:34-04:00</Time>
+    </Item>
+    <Item>
+      <Source>Blocks\Dirt.png</Source>
+      <Name>Blocks\Dirt</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+      <Options>None</Options>
+      <Output>D:\Kuess\Final Project\Kuessaria\Kuessaria\Kuessaria\bin\x86\Debug\Content\Blocks\Dirt.xnb</Output>
+      <Time>2016-06-09T20:54:46-04:00</Time>
+    </Item>
+    <Item>
+      <Source>player.png</Source>
+      <Name>player</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+      <Options>None</Options>
+      <Output>D:\Kuess\Final Project\Kuessaria\Kuessaria\Kuessaria\bin\x86\Debug\Content\player.xnb</Output>
+      <Time>2016-06-17T14:20:26-04:00</Time>
+    </Item>
+    <Item>
+      <Source>Backgrounds\MainMenu.png</Source>
+      <Name>Backgrounds\MainMenu</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+      <Options>None</Options>
+      <Output>D:\Kuess\Final Project\Kuessaria\Kuessaria\Kuessaria\bin\x86\Debug\Content\Backgrounds\MainMenu.xnb</Output>
+      <Time>2016-06-10T17:07:18-04:00</Time>
+    </Item>
+    <Item>
+      <Source>Buttons\Button1.png</Source>
+      <Name>Buttons\Button1</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+      <Options>None</Options>
+      <Output>D:\Kuess\Final Project\Kuessaria\Kuessaria\Kuessaria\bin\x86\Debug\Content\Buttons\Button1.xnb</Output>
+      <Time>2016-06-10T17:30:04-04:00</Time>
+    </Item>
+    <Item>
+      <Source>Blocks\Tile2.jpg</Source>
+      <Name>Blocks\Tile2</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+      <Options>None</Options>
+      <Output>D:\Kuess\Final Project\Kuessaria\Kuessaria\Kuessaria\bin\x86\Debug\Content\Blocks\Tile2.xnb</Output>
+      <Time>2016-06-11T17:00:16-04:00</Time>
+    </Item>
+    <Item>
+      <Source>Blocks\Tile1.jpg</Source>
+      <Name>Blocks\Tile1</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+      <Options>None</Options>
+      <Output>D:\Kuess\Final Project\Kuessaria\Kuessaria\Kuessaria\bin\x86\Debug\Content\Blocks\Tile1.xnb</Output>
+      <Time>2016-06-11T17:00:16-04:00</Time>
+    </Item>
+    <Item>
+      <Source>Blocks\Tile3.jpg</Source>
+      <Name>Blocks\Tile3</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+      <Options>None</Options>
+      <Output>D:\Kuess\Final Project\Kuessaria\Kuessaria\Kuessaria\bin\x86\Debug\Content\Blocks\Tile3.xnb</Output>
+      <Time>2016-06-11T17:00:16-04:00</Time>
+    </Item>
+    <Item>
+      <Source>Backgrounds\LoadMenu.png</Source>
+      <Name>Backgrounds\LoadMenu</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+      <Options>None</Options>
+      <Output>D:\Kuess\Final Project\Kuessaria\Kuessaria\Kuessaria\bin\x86\Debug\Content\Backgrounds\LoadMenu.xnb</Output>
+      <Time>2016-06-17T00:06:48-04:00</Time>
+    </Item>
+    <Item>
+      <Source>slime.png</Source>
+      <Name>slime</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+      <Options>None</Options>
+      <Output>D:\Kuess\Final Project\Kuessaria\Kuessaria\Kuessaria\bin\x86\Debug\Content\slime.xnb</Output>
+      <Time>2016-06-24T00:00:14-04:00</Time>
+    </Item>
+    <Item>
+      <Source>bat.png</Source>
+      <Name>bat</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+      <Options>None</Options>
+      <Output>D:\Kuess\Final Project\Kuessaria\Kuessaria\Kuessaria\bin\x86\Debug\Content\bat.xnb</Output>
+      <Time>2016-06-24T02:05:06-04:00</Time>
+    </Item>
+    <Item>
+      <Source>slimeBoss.png</Source>
+      <Name>slimeBoss</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+      <Options>None</Options>
+      <Output>D:\Kuess\Final Project\Kuessaria\Kuessaria\Kuessaria\bin\x86\Debug\Content\slimeBoss.xnb</Output>
+      <Time>2016-06-24T12:11:26-04:00</Time>
+    </Item>
+    <Item>
+      <Source>Sword.png</Source>
+      <Name>Sword</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+      <Options>None</Options>
+      <Output>D:\Kuess\Final Project\Kuessaria\Kuessaria\Kuessaria\bin\x86\Debug\Content\Sword.xnb</Output>
+      <Time>2019-06-21T16:42:23.8146491-04:00</Time>
+    </Item>
+    <Item>
+      <Source>Buttons\Button2.png</Source>
+      <Name>Buttons\Button2</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+      <Options>None</Options>
+      <Output>D:\Kuess\Final Project\Kuessaria\Kuessaria\Kuessaria\bin\x86\Debug\Content\Buttons\Button2.xnb</Output>
+      <Time>2016-06-24T21:52:38-04:00</Time>
+    </Item>
+    <Item>
+      <Source>Buttons\Button3.png</Source>
+      <Name>Buttons\Button3</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+      <Options>None</Options>
+      <Output>D:\Kuess\Final Project\Kuessaria\Kuessaria\Kuessaria\bin\x86\Debug\Content\Buttons\Button3.xnb</Output>
+      <Time>2016-06-24T21:52:38-04:00</Time>
+    </Item>
+    <Item>
+      <Source>Backgrounds\Instructions.png</Source>
+      <Name>Backgrounds\Instructions</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+      <Options>None</Options>
+      <Output>D:\Kuess\Final Project\Kuessaria\Kuessaria\Kuessaria\bin\x86\Debug\Content\Backgrounds\Instructions.xnb</Output>
+      <Time>2016-06-24T22:28:08-04:00</Time>
+    </Item>
+    <Item>
+      <Source>LevelUp.png</Source>
+      <Name>LevelUp</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+      <Options>None</Options>
+      <Output>D:\Kuess\Final Project\Kuessaria\Kuessaria\Kuessaria\bin\x86\Debug\Content\LevelUp.xnb</Output>
+      <Time>2016-12-22T15:55:56-05:00</Time>
+    </Item>
+    <Item>
+      <Source>Stats.png</Source>
+      <Name>Stats</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+      <Options>None</Options>
+      <Output>D:\Kuess\Final Project\Kuessaria\Kuessaria\Kuessaria\bin\x86\Debug\Content\Stats.xnb</Output>
+      <Time>2016-12-22T15:55:04-05:00</Time>
+    </Item>
+    <Item>
+      <Source>StatsExtended.png</Source>
+      <Name>StatsExtended</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+      <Options>None</Options>
+      <Output>D:\Kuess\Final Project\Kuessaria\Kuessaria\Kuessaria\bin\x86\Debug\Content\StatsExtended.xnb</Output>
+      <Time>2016-12-22T15:55:26-05:00</Time>
+    </Item>
+    <Item>
+      <Source>Load.spritefont</Source>
+      <Name>Load</Name>
+      <Importer>FontDescriptionImporter</Importer>
+      <Processor>FontDescriptionProcessor</Processor>
+      <Options>None</Options>
+      <Output>D:\Kuess\Final Project\Kuessaria\Kuessaria\Kuessaria\bin\x86\Debug\Content\Load.xnb</Output>
+      <Time>2016-06-17T01:31:24-04:00</Time>
+    </Item>
+    <Item>
+      <Source>PlayerName.spritefont</Source>
+      <Name>PlayerName</Name>
+      <Importer>FontDescriptionImporter</Importer>
+      <Processor>FontDescriptionProcessor</Processor>
+      <Options>None</Options>
+      <Output>D:\Kuess\Final Project\Kuessaria\Kuessaria\Kuessaria\bin\x86\Debug\Content\PlayerName.xnb</Output>
+      <Time>2016-06-17T03:21:36-04:00</Time>
+    </Item>
+    <BuildSuccessful>true</BuildSuccessful>
+    <Settings>
+      <ContentProjectGUID>{5F0154B1-51DC-48F1-9D75-E304B371B727}</ContentProjectGUID>
+      <TargetPlatform>Windows</TargetPlatform>
+      <TargetProfile>Reach</TargetProfile>
+      <BuildConfiguration>Debug</BuildConfiguration>
+      <CompressContent>false</CompressContent>
+      <RootDirectory>D:\Kuess\Final Project\Kuessaria\Kuessaria\KuessariaContent\</RootDirectory>
+      <LoggerRootDirectory>D:\Kuess\Final Project\Kuessaria\Kuessaria\Kuessaria\</LoggerRootDirectory>
+      <IntermediateDirectory>D:\Kuess\Final Project\Kuessaria\Kuessaria\Kuessaria\obj\x86\Debug\</IntermediateDirectory>
+      <OutputDirectory>D:\Kuess\Final Project\Kuessaria\Kuessaria\Kuessaria\bin\x86\Debug\Content\</OutputDirectory>
+    </Settings>
+    <Assemblies>
+      <Assembly>
+        <Key>C:\Program Files (x86)\Microsoft XNA\XNA Game Studio\v4.0\References\Windows\x86\Microsoft.Xna.Framework.Content.Pipeline.XImporter.dll</Key>
+        <Value>2011-09-01T16:22:30-04:00</Value>
+      </Assembly>
+      <Assembly>
+        <Key>C:\Program Files (x86)\Microsoft XNA\XNA Game Studio\v4.0\References\Windows\x86\Microsoft.Xna.Framework.Content.Pipeline.VideoImporters.dll</Key>
+        <Value>2011-09-01T16:22:30-04:00</Value>
+      </Assembly>
+      <Assembly>
+        <Key>C:\Program Files (x86)\Microsoft XNA\XNA Game Studio\v4.0\References\Windows\x86\Microsoft.Xna.Framework.Content.Pipeline.TextureImporter.dll</Key>
+        <Value>2011-09-01T16:22:30-04:00</Value>
+      </Assembly>
+      <Assembly>
+        <Key>C:\Program Files (x86)\Microsoft XNA\XNA Game Studio\v4.0\References\Windows\x86\Microsoft.Xna.Framework.Content.Pipeline.FBXImporter.dll</Key>
+        <Value>2011-09-01T16:22:30-04:00</Value>
+      </Assembly>
+      <Assembly>
+        <Key>C:\Program Files (x86)\Microsoft XNA\XNA Game Studio\v4.0\References\Windows\x86\Microsoft.Xna.Framework.Content.Pipeline.EffectImporter.dll</Key>
+        <Value>2011-09-01T16:22:30-04:00</Value>
+      </Assembly>
+      <Assembly>
+        <Key>C:\Program Files (x86)\Microsoft XNA\XNA Game Studio\v4.0\References\Windows\x86\Microsoft.Xna.Framework.Content.Pipeline.AudioImporters.dll</Key>
+        <Value>2011-09-01T16:22:30-04:00</Value>
+      </Assembly>
+      <Assembly>
+        <Key>C:\Windows\Microsoft.Net\assembly\GAC_32\Microsoft.Xna.Framework.Content.Pipeline\v4.0_4.0.0.0__842cf8be1de50553\Microsoft.Xna.Framework.Content.Pipeline.dll</Key>
+        <Value>2019-06-21T16:35:48.5697339-04:00</Value>
+      </Assembly>
+    </Assemblies>
+  </Asset>
+</XnaContent>
