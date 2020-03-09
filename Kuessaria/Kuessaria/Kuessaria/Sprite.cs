@@ -70,11 +70,12 @@ namespace Kuessaria
 
     }
     
-    class Sword : Sprite//this is the sword sprite, it has a ton of stuff going on inside
+    class Weapon : Sprite//this is the sword sprite, it has a ton of stuff going on inside
     {
         Vector2 spriteOrigin;//this is the center of the sprite
         bool heal = false;//this is the bool to see if they are healing
         int cooldown;// this is the cooldown on the heal
+        public PlayerStats owner { get; set; }//the wielder of the weapon
         
         enum Swinging//these are enums used for the swinging switch
         {
@@ -93,9 +94,9 @@ namespace Kuessaria
         }
         public swung SWUNG;//this is the swung that SWUNG
         public bool swinged;//this is a bool to check if they swung named swinged
-        public Sword(Texture2D newTexture, Rectangle newRectangle)////this creates the sword using just a texture and rectangle
+        public Weapon(Texture2D newTexture, Rectangle newRectangle, PlayerStats Owner)////this creates the sword using just a texture and rectangle
         {
-
+            owner = Owner;
             Position = new Vector2(newRectangle.X, newRectangle.Y);//it sets the position using the rectangles position
 
             texture = newTexture;

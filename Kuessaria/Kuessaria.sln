@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 14
-VisualStudioVersion = 14.0.24720.0
+# Visual Studio 15
+VisualStudioVersion = 15.0.28307.136
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Kuessaria", "Kuessaria\Kuessaria\Kuessaria.csproj", "{AF3A2F15-96B0-4650-95B7-70D0101AAFA0}"
 EndProject
@@ -12,24 +12,51 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 		..\CONTENT\Stats.png = ..\CONTENT\Stats.png
 	EndProjectSection
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ServerSide", "ServerSide\ServerSide.csproj", "{5D9AB491-0444-4B8D-B40A-AE7E6DC40E94}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Awesome|Any CPU = Awesome|Any CPU
 		Awesome|x86 = Awesome|x86
+		Debug|Any CPU = Debug|Any CPU
 		Debug|x86 = Debug|x86
+		Release|Any CPU = Release|Any CPU
 		Release|x86 = Release|x86
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{AF3A2F15-96B0-4650-95B7-70D0101AAFA0}.Awesome|Any CPU.ActiveCfg = Debug|x86
+		{AF3A2F15-96B0-4650-95B7-70D0101AAFA0}.Awesome|Any CPU.Build.0 = Debug|x86
 		{AF3A2F15-96B0-4650-95B7-70D0101AAFA0}.Awesome|x86.ActiveCfg = Release|x86
 		{AF3A2F15-96B0-4650-95B7-70D0101AAFA0}.Awesome|x86.Build.0 = Release|x86
+		{AF3A2F15-96B0-4650-95B7-70D0101AAFA0}.Debug|Any CPU.ActiveCfg = Debug|x86
 		{AF3A2F15-96B0-4650-95B7-70D0101AAFA0}.Debug|x86.ActiveCfg = Debug|x86
 		{AF3A2F15-96B0-4650-95B7-70D0101AAFA0}.Debug|x86.Build.0 = Debug|x86
+		{AF3A2F15-96B0-4650-95B7-70D0101AAFA0}.Release|Any CPU.ActiveCfg = Release|x86
 		{AF3A2F15-96B0-4650-95B7-70D0101AAFA0}.Release|x86.ActiveCfg = Release|x86
 		{AF3A2F15-96B0-4650-95B7-70D0101AAFA0}.Release|x86.Build.0 = Release|x86
+		{5F0154B1-51DC-48F1-9D75-E304B371B727}.Awesome|Any CPU.ActiveCfg = Debug|x86
 		{5F0154B1-51DC-48F1-9D75-E304B371B727}.Awesome|x86.ActiveCfg = Release|x86
+		{5F0154B1-51DC-48F1-9D75-E304B371B727}.Debug|Any CPU.ActiveCfg = Debug|x86
 		{5F0154B1-51DC-48F1-9D75-E304B371B727}.Debug|x86.ActiveCfg = Debug|x86
+		{5F0154B1-51DC-48F1-9D75-E304B371B727}.Release|Any CPU.ActiveCfg = Release|x86
 		{5F0154B1-51DC-48F1-9D75-E304B371B727}.Release|x86.ActiveCfg = Release|x86
+		{5D9AB491-0444-4B8D-B40A-AE7E6DC40E94}.Awesome|Any CPU.ActiveCfg = Release|Any CPU
+		{5D9AB491-0444-4B8D-B40A-AE7E6DC40E94}.Awesome|Any CPU.Build.0 = Release|Any CPU
+		{5D9AB491-0444-4B8D-B40A-AE7E6DC40E94}.Awesome|x86.ActiveCfg = Release|Any CPU
+		{5D9AB491-0444-4B8D-B40A-AE7E6DC40E94}.Awesome|x86.Build.0 = Release|Any CPU
+		{5D9AB491-0444-4B8D-B40A-AE7E6DC40E94}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5D9AB491-0444-4B8D-B40A-AE7E6DC40E94}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5D9AB491-0444-4B8D-B40A-AE7E6DC40E94}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{5D9AB491-0444-4B8D-B40A-AE7E6DC40E94}.Debug|x86.Build.0 = Debug|Any CPU
+		{5D9AB491-0444-4B8D-B40A-AE7E6DC40E94}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5D9AB491-0444-4B8D-B40A-AE7E6DC40E94}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5D9AB491-0444-4B8D-B40A-AE7E6DC40E94}.Release|x86.ActiveCfg = Release|Any CPU
+		{5D9AB491-0444-4B8D-B40A-AE7E6DC40E94}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {EC2A061F-D71A-4AFF-B831-EC4195A0231A}
 	EndGlobalSection
 EndGlobal

@@ -3,12 +3,14 @@ using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
+using System.Net.Sockets;
 using System.Text;
 
 namespace Kuessaria
 {
-    class PlayerSprite : Sprite//this player sprite holds animated sprites that can move
+    class EntitySprite : Sprite//this player sprite holds animated sprites that can move
     {
         public Rectangle POSRect;//this is the position rectangle the character is at
         public bool hit = false;// this is a boolean determining if object was hit
@@ -24,12 +26,12 @@ namespace Kuessaria
         public float hitTimer = 0;// this is a timer that determines if an object is ready to get hit again
         
         public int Frames;//this is the total number of frames
-        public PlayerSprite()
+        public EntitySprite()
         {
 
         }
 
-        public PlayerSprite(Texture2D newTexture, Vector2 newPosition, int newWidth, int newHeight, int frames)// this constructor creates the object using the values it takes in
+        public EntitySprite(Texture2D newTexture, Vector2 newPosition, int newWidth, int newHeight, int frames)// this constructor creates the object using the values it takes in
         {
             Frames = frames;
             texture = newTexture;
@@ -37,12 +39,12 @@ namespace Kuessaria
             Height = newHeight;
             Position = newPosition;
             rectangle = new Rectangle((int)newPosition.X, (int)newPosition.Y, Width, Height);
-
+            
         }
-        public virtual void Update(GameTime gameTime, PlayerStats stats)//this is the update method that runs constantly
+        public virtual void Update(GameTime gameTime, PlayerStats stats, TcpClient client, BinaryWriter writer, MemoryStream writeStream)//this is the update method that runs constantly
         {
 
-            Move(gameTime, stats);//this checks if the player is moving
+            Move(gameTime, stats, client, writer, writeStream);//this checks if the player is moving
             rectangle = new Rectangle(currentFrame * Width, 0, Width, Height);//this rectangle is the one that determines what is being drawn
             origin = new Vector2(rectangle.Width / 2, rectangle.Height / 2);//this is the center of that rectangle
             Position += velocity;//this adds velocity to the position to move the object
@@ -60,6 +62,68 @@ namespace Kuessaria
 
 
         }
+        internal void Update(GameTime gameTime)
+        {
+            MoveIndependent(gameTime);
+            rectangle = new Rectangle(currentFrame * Width, 0, Width, Height);//this rectangle is the one that determines what is being drawn
+            origin = new Vector2(rectangle.Width / 2, rectangle.Height / 2);//this is the center of that rectangle
+            Position += velocity;//this adds velocity to the position to move the object
+            POSRect = new Rectangle((int)Position.X - Width / 2, (int)Position.Y - Height / 2, Width, Height);// this is the hitbox of the character, a rectangle at their position
+
+
+
+            if (hitTimer <= 0)//if the hit timer is less than or equal to 0
+            {
+                hit = false;//it will set hit back to false
+                hitTimer = 0;// and keep the hittimer at 0
+            }
+            else//if it wasnt 0
+            {
+                hitTimer--;//it will attempt to bring it down to zero
+            }
+        }
+
+        private void MoveIndependent(GameTime gameTime)
+        {
+            bool right = false;
+            bool stopped = false;
+            if (velocity.X > 0)
+            {
+                right = true;
+                AnimateRight(gameTime);
+            }
+            else if (velocity.X < 0)
+            {               
+                AnimateLeft(gameTime);
+            }
+            else
+            {
+                stopped = true;
+            }
+            velocity.X = (float)Math.Round((velocity.X * 0.85), 2);//it will round their left right velocity to slowly slow them down
+            if (!stopped && Math.Abs(velocity.X) < 0.05)
+            {
+                velocity.X = 0;
+                if (right)
+                {
+                    currentFrame = 3;
+                }
+                else
+                {
+                    currentFrame = 4;
+                }
+            }
+
+
+            if (velocity.Y < 20)//this is the constant of gravity that is added if they are not at terminal velocity
+                velocity.Y += 0.4f;
+
+            if (velocity.Y >= 20)//this ensures they dont go past the terminal velocity of 20
+            {
+                velocity.Y = 20;
+            }
+        }
+
         public override void Draw(SpriteBatch spriteBatch)
         {
             spriteBatch.Draw(texture, Position, rectangle, Color.White, 0f, origin, 1.0f, SpriteEffects.None, 0);// this simply draws the sprite
@@ -72,19 +136,30 @@ namespace Kuessaria
             velocity.Y = -16f;//this makes the player move upward
             letgo = false;//this is sort of a pastkey type deal
             Jumped = true;//this makes sure the player cant jump again yet
+
         }
-        public virtual void Move(GameTime gameTime, PlayerStats Stats)//this determines the players movement
+        public virtual void Move(GameTime gameTime, PlayerStats Stats, TcpClient client, BinaryWriter writer, MemoryStream writeStream)//this determines the players movement
 
         {
             if (Keyboard.GetState().IsKeyDown(Keys.D))//if they are pressing d
             {
                 AnimateRight(gameTime);//it animates it to the right
                 velocity.X = Stats.mSpeed;//and sets their MSpeed to their velocity
+                writeStream.Position = 0;
+                writer.Write((byte)Protocol.PlayerMoved);
+                writer.Write(this.velocity.X);
+                writer.Write(this.velocity.Y);
+                SendData(GetDataFromMemoryStream(writeStream), client);
             }
             else if (Keyboard.GetState().IsKeyDown(Keys.A))// this does the same but for left
             {
                 AnimateLeft(gameTime);
                 velocity.X = -Stats.mSpeed;
+                writeStream.Position = 0;
+                writer.Write((byte)Protocol.PlayerMoved);
+                writer.Write(this.velocity.X);
+                writer.Write(this.velocity.Y);
+                SendData(GetDataFromMemoryStream(writeStream), client);
             }
             else// if the player isnt pressing left or right it will do all this
             {
@@ -125,12 +200,79 @@ namespace Kuessaria
             }
 
             if (Keyboard.GetState().IsKeyDown(Keys.W) && Jumped == false)//if they press w and havent jumped yet
+            {
                 Jump();//theyll jump
+                writeStream.Position = 0;
+                writer.Write((byte)Protocol.PlayerMoved);
+                writer.Write(this.velocity.X);
+                writer.Write(this.velocity.Y);
+                SendData(GetDataFromMemoryStream(writeStream),client);
+            }
 
             if (velocity.Y < 20)//this is the constant of gravity that is added if they are not at terminal velocity
                 velocity.Y += 0.4f;
         
         }
+
+        public virtual void Move(GameTime gameTime, Vector2 speed)//this determines the players movement
+
+        {
+            if (speed.X > 0)//if they are pressing d
+            {
+                AnimateRight(gameTime);//it animates it to the right
+                velocity.X = speed.X;//and sets their MSpeed to their velocity
+            }
+            else if (speed.X < 0)// this does the same but for left
+            {
+                AnimateLeft(gameTime);
+                velocity.X = speed.X;
+            }
+            else// if the player isnt pressing left or right it will do all this
+            {
+                velocity.X = (float)Math.Round((velocity.X * 0.85), 2);//it will round their left right velocity to slowly slow them down
+
+                if (velocity.X > 0)//if their velocity is greater than zero when they stopped
+                {
+                    currentFrame = 3;//it sets them in the right idle frame
+                    if (velocity.X < 0.05)// if its less than 0.05 it rounds it down to 0 so that the player doesnt  move indefinitely
+                    {
+                        velocity.X = 0f;
+                    }
+                }
+                if (velocity.X < 0)// does the same as the  above but for moving left
+                {
+                    currentFrame = 4;
+                    if (velocity.X > -0.05)
+                    {
+                        velocity.X = 0f;
+                    }
+                }
+
+            }
+            if (Jumped == true && (Keyboard.GetState().IsKeyDown(Keys.W)))// if they press W and jumped is true this is added to help slow the player down
+            {
+                float i = 1;
+                velocity.Y += 0.15f * i;
+
+            }
+            else if (Jumped == true && Keyboard.GetState().IsKeyUp(Keys.W) && letgo == false && velocity.Y < 0)//is they jumped and have put the w key up and they havent letgo already and the velocity isnt less than 0 already
+            {
+                velocity.Y += 5;//it adds 5 to the velocity, to slow them down because they let go of w
+                letgo = true;//sets letgo to true so this doesnt run again
+            }
+            if (velocity.Y >= 20)//this ensures they dont go past the terminal velocity of 20
+            {
+                velocity.Y = 20;
+            }
+
+            if (Keyboard.GetState().IsKeyDown(Keys.W) && Jumped == false)//if they press w and havent jumped yet
+                Jump();//theyll jump
+
+            if (velocity.Y < 20)//this is the constant of gravity that is added if they are not at terminal velocity
+                velocity.Y += 0.4f;
+
+        }
+
         //Animation Methods
         public virtual void AnimateRight(GameTime gameTime)
         {
@@ -190,9 +332,46 @@ namespace Kuessaria
             if (Position.Y < 0) velocity.Y = 1f;//if they try and jump out, it sends them back down
             if (Position.Y > yOffset - Height/2) Position.Y = yOffset - Height/2;//ifthey fall out at the bottom of the map it holds them in
         }
-       
+        /// <summary>
+        /// Converts a MemoryStream to a byte array
+        /// </summary>
+        /// <param name="ms">MemoryStream to convert</param>
+        /// <returns>Byte array representation of the data</returns>
+        private byte[] GetDataFromMemoryStream(MemoryStream ms)
+        {
+            byte[] result;
 
-       
-       
+            //Async method called this, so lets lock the object to make sure other threads/async calls need to wait to use it.
+            lock (ms)
+            {
+                int bytesWritten = (int)ms.Position;
+                result = new byte[bytesWritten];
+
+                ms.Position = 0;
+                ms.Read(result, 0, bytesWritten);
+            }
+
+            return result;
+        }
+        /// <summary>
+        /// Code to actually send the data to the client
+        /// </summary>
+        /// <param name="b">Data to send</param>
+        public void SendData(byte[] b, TcpClient client)
+        {
+            //Try to send the data.  If an exception is thrown, disconnect the client
+            try
+            {
+                lock (client.GetStream())
+                {
+                    client.GetStream().BeginWrite(b, 0, b.Length, null, null);
+                }
+            }
+            catch (Exception e)
+            {
+                System.Windows.Forms.MessageBox.Show("Error sending message: " + e);
+            }
+        }
+
     }
 }

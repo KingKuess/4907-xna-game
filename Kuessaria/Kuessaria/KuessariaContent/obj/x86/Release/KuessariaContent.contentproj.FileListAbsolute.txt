@@ -1,2 +1,4 @@
 D:\Kuess\Final Project\Kuessaria\Kuessaria\KuessariaContent\obj\x86\Release\KuessariaContent.contentprojAssemblyReference.cache
 D:\Kuess\Final Project\Kuessaria\Kuessaria\KuessariaContent\obj\x86\Release\KuessariaContent.contentproj.CoreCompileInputs.cache
+C:\Users\kyle9\Desktop\4907-xna-game\Kuessaria\Kuessaria\KuessariaContent\obj\x86\Release\KuessariaContent.contentprojAssemblyReference.cache
+C:\Users\kyle9\Desktop\4907-xna-game\Kuessaria\Kuessaria\KuessariaContent\obj\x86\Release\KuessariaContent.contentproj.CoreCompileInputs.cache

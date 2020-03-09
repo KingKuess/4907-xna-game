@@ -7,7 +7,7 @@ using System.Text;
 
 namespace Kuessaria
 {
-    class Enemy : PlayerSprite
+    class Enemy : EntitySprite
     {
         // The next values use encapsulation so they can be publicly obtained and set, they are all labelled self explainingly and thus only special ones will be commented
         int Health;
@@ -207,19 +207,19 @@ namespace Kuessaria
             }
 
         }
-        public void SlimeCollision(Sword sword, PlayerStats player)// this checks to see if the enemy is colliding with a sword
+        public void SlimeCollision(Weapon sword, PlayerStats player)// this checks to see if the enemy is colliding with a sword
         {
             if (sword.POSRect.Intersects(POSRect) && sword.swinged == true && hit == false)//if the swords rectangle is intersecting the slimes, and the sword is being swung, and the slime hasnt been hit recently
             {
 
                 Health += -player.strength;//the slimes health gets the players strength taken out of it
-                if (sword.SWUNG == Sword.swung.left)// if the sword was swung to the left
+                if (sword.SWUNG == Weapon.swung.left)// if the sword was swung to the left
                 {
                     action = 40;//sets the slime action to 40, making it run away to the left
                     movetimer = 0;//sets movetimer to 0 so that it doesnt instantly turn back around
                     
                 }
-                if (sword.SWUNG == Sword.swung.right)// this is the same but makes the action run to the right
+                if (sword.SWUNG == Weapon.swung.right)// this is the same but makes the action run to the right
                 {
                     action = 20;
                     movetimer = 0;

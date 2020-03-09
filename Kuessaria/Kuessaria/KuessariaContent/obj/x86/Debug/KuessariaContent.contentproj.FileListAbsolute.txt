@@ -1,3 +1,5 @@
 C:\Users\kyle9\Desktop\Final Project\Kuessaria\Kuessaria\KuessariaContent\obj\x86\Debug\KuessariaContent.contentprojResolveAssemblyReference.cache
 D:\Kuess\Final Project\Kuessaria\Kuessaria\KuessariaContent\obj\x86\Debug\KuessariaContent.contentprojAssemblyReference.cache
 D:\Kuess\Final Project\Kuessaria\Kuessaria\KuessariaContent\obj\x86\Debug\KuessariaContent.contentproj.CoreCompileInputs.cache
+C:\Users\kyle9\Desktop\4907-xna-game\Kuessaria\Kuessaria\KuessariaContent\obj\x86\Debug\KuessariaContent.contentprojAssemblyReference.cache
+C:\Users\kyle9\Desktop\4907-xna-game\Kuessaria\Kuessaria\KuessariaContent\obj\x86\Debug\KuessariaContent.contentproj.CoreCompileInputs.cache

@@ -8,7 +8,7 @@ using System.Text;
 
 namespace Kuessaria
 {
-    class PlayerStats : PlayerSprite
+    class PlayerStats : EntitySprite
     {
         /// <summary>
         /// All these stats are self explanatory but the 
@@ -171,6 +171,7 @@ namespace Kuessaria
             
         }
 
+
         public PlayerStats(Texture2D texture2D, int width, int height, int frames)// this creates the character when they didnt input a value
         {
             Health = 100;// it sets all the values to their defaults
@@ -221,7 +222,7 @@ namespace Kuessaria
             System.IO.File.WriteAllLines("Saves/" + Name + ".txt", stats);// then saves it as a .txt in the saves folder
 
         }
-        public void Draw(SpriteBatch spriteBatch, SpriteFont font, Viewport Viewport, KeyboardState keyboard, Texture2D Menu1, Texture2D Menu2, Texture2D Menu3, Vector2 center, Rectangle maprectangle)//this draw takes a few things into account
+        public void Draw(SpriteBatch spriteBatch)//this draw takes a few things into account
         {
             if (hit)// if the player was hit
             {
@@ -231,7 +232,7 @@ namespace Kuessaria
             {
                 spriteBatch.Draw(texture, Position, rectangle, Color.White, 0f, origin, 1.0f, SpriteEffects.None, 0);//it draws them normally
             }
-            DrawStats(spriteBatch, font, Viewport, keyboard, Menu1, Menu2, Menu3, center, maprectangle);//it then draws the stats menu in the top left
+            
 
         }
         public void LevelUp()//the level up method sets the quickstate menu state to level up
@@ -292,7 +293,7 @@ namespace Kuessaria
             }
         }
 
-        private void DrawStats(SpriteBatch spriteBatch, SpriteFont font, Viewport Viewport, KeyboardState keyboard, Texture2D Menu1, Texture2D Menu2, Texture2D Menu3, Vector2 centre, Rectangle rectangle)// this draws the stat board
+        public void DrawStatsDisplay(SpriteBatch spriteBatch, SpriteFont font, Viewport Viewport, KeyboardState keyboard, Texture2D Menu1, Texture2D Menu2, Texture2D Menu3, Vector2 centre, Rectangle rectangle)// this draws the stat board
         {
             switch (CurrentQuickState)//this switch determines whether to draw all the stats or just health and mana
             {

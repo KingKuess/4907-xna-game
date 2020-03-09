@@ -19,3 +19,5 @@ Content\Stats.xnb
 Content\StatsExtended.xnb
 Content\Load.xnb
 Content\PlayerName.xnb
+Content\NPC1.xnb
+Content\player2.xnb

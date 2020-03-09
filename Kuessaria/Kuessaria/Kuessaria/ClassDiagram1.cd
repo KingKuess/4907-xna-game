@@ -1,0 +1,140 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Class Name="Kuessaria.Game1">
+    <Position X="0.5" Y="0.5" Width="1.5" />
+    <Compartments>
+      <Compartment Name="Nested Types" Collapsed="false" />
+    </Compartments>
+    <NestedTypes>
+      <Enum Name="Kuessaria.Game1.GameState">
+        <TypeIdentifier>
+          <NewMemberFileName>Game1.cs</NewMemberFileName>
+        </TypeIdentifier>
+      </Enum>
+    </NestedTypes>
+    <TypeIdentifier>
+      <HashCode>AAaGkEAAhEACAwAAGAQ1AEAAAAAAAAgAAAAcgQhCAAQ=</HashCode>
+      <FileName>Game1.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Kuessaria.EntitySprite">
+    <Position X="3.75" Y="0.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>CAQACAAAhoAACgAAgIAAAECAAABAAAAAAAQAEQAAAEE=</HashCode>
+      <FileName>EntitySprite.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Kuessaria.Enemy">
+    <Position X="4.5" Y="6.75" Width="1.5" />
+    <Compartments>
+      <Compartment Name="Nested Types" Collapsed="false" />
+    </Compartments>
+    <NestedTypes>
+      <Enum Name="Kuessaria.Enemy.Spawned" Collapsed="true">
+        <TypeIdentifier>
+          <NewMemberFileName>Enemy.cs</NewMemberFileName>
+        </TypeIdentifier>
+      </Enum>
+    </NestedTypes>
+    <TypeIdentifier>
+      <HashCode>AEQEDAAAAoAAKgAgAAAAAAAAAABAAAAAAQEAIAAAAAo=</HashCode>
+      <FileName>Enemy.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Kuessaria.PlayerStats">
+    <Position X="2.75" Y="6.75" Width="1.5" />
+    <Compartments>
+      <Compartment Name="Nested Types" Collapsed="false" />
+    </Compartments>
+    <NestedTypes>
+      <Enum Name="Kuessaria.PlayerStats.QuickState" Collapsed="true">
+        <TypeIdentifier>
+          <NewMemberFileName>PlayerStats.cs</NewMemberFileName>
+        </TypeIdentifier>
+      </Enum>
+    </NestedTypes>
+    <TypeIdentifier>
+      <HashCode>AAEQKAAIEAAACgAAAAAAAAQBABHFAAAhQQDAIAAAQCg=</HashCode>
+      <FileName>PlayerStats.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Kuessaria.Sprite">
+    <Position X="6.75" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAQAAAAAAAAAAgAgAAAAACAAAAAAAgAAAAAAAAAAAAA=</HashCode>
+      <FileName>Sprite.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Kuessaria.Background">
+    <Position X="8.5" Y="4" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Sprite.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Kuessaria.Weapon">
+    <Position X="6.75" Y="4" Width="1.5" />
+    <Compartments>
+      <Compartment Name="Nested Types" Collapsed="false" />
+    </Compartments>
+    <NestedTypes>
+      <Enum Name="Kuessaria.Weapon.Swinging">
+        <TypeIdentifier>
+          <NewMemberFileName>Sprite.cs</NewMemberFileName>
+        </TypeIdentifier>
+      </Enum>
+      <Enum Name="Kuessaria.Weapon.swung">
+        <TypeIdentifier>
+          <NewMemberFileName>Sprite.cs</NewMemberFileName>
+        </TypeIdentifier>
+      </Enum>
+    </NestedTypes>
+    <TypeIdentifier>
+      <HashCode>gAQAAAIAAIgAAgAAAACAAACAASAAAAAAAAAAgAAEAEA=</HashCode>
+      <FileName>Sprite.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Kuessaria.RectangleHelper" Collapsed="true">
+    <Position X="11.5" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAgAAAAAAAgAAAAAAAAAAAAAAAAAAAAAgAAAAAAE=</HashCode>
+      <FileName>RectangleHelper.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Kuessaria.Tiles">
+    <Position X="11.25" Y="5.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAACAAAAAgAAAgAAAAAAACAAAAAgAgAAAAAAAAAAAAA=</HashCode>
+      <FileName>Tiles.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Kuessaria.CollisionTiles" Collapsed="true">
+    <Position X="11.25" Y="4.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Tiles.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Kuessaria.Map">
+    <Position X="13" Y="4.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAEABAAAAgQAQAAAAEAgAAAAAAAAAQAAAEAAAAA=</HashCode>
+      <FileName>Map.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Kuessaria.Camera">
+    <Position X="9.75" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAQAAAAQAAAAAAAAAAAABAAAAAAEAAAAAQAAAAAAAAA=</HashCode>
+      <FileName>Camera.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Kuessaria.input">
+    <Position X="11.5" Y="1.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>QAAgAAAAAAAIAAAAAAAAAAAAAAAAAAAAAQAAAAAAAAA=</HashCode>
+      <FileName>input.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Font Name="Segoe UI" Size="9" />
+</ClassDiagram>

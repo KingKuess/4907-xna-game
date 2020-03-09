@@ -21,7 +21,7 @@ namespace Kuessaria
         {
             view = NewView;
         }
-        public void Update(GameTime gameTime, PlayerSprite Player, int width, int height, Rectangle rectangle)// this is used for updateting the camera and takes in the playersprite so it cantrack the player
+        public void Update(GameTime gameTime, EntitySprite Player, int width, int height, Rectangle rectangle)// this is used for updateting the camera and takes in the playersprite so it cantrack the player
         {
             centre = new Vector2(Player.Position.X , Player.Position.Y);// this is the centre of the camera and will always be at the players position
             

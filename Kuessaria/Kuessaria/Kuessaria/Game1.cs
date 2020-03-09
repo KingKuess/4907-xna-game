@@ -12,12 +12,25 @@ using Microsoft.Xna.Framework.GamerServices;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using Microsoft.Xna.Framework.Media;
+using System.Net.Sockets;
+using System.Net;
+using System.IO;
 
 namespace Kuessaria
 {
 
     public class Game1 : Microsoft.Xna.Framework.Game//This is the main Class in which all things are run
     {
+        //Networking attributes
+        TcpClient client;
+        string IP = "127.0.0.1";
+        int PORT = 1490;
+        int BUFFER_SIZE = 2048;
+        byte[] readBuffer;
+        MemoryStream readStream, writeStream;
+        BinaryReader reader;
+        BinaryWriter writer;
+
         
         GraphicsDeviceManager graphics;//This is literally the graphics device running the game
         SpriteBatch spriteBatch;//This is a variable that enables sprites to be drawn
@@ -32,8 +45,10 @@ namespace Kuessaria
         //Game World
         Random rng = new Random();// this generates a random number generator for use throughout the code
         List<Sprite> platforms = new List<Sprite>();// this is the list that holds all the tiles the character and mobs walk on
+        List<Sprite> doors = new List<Sprite>();// These are the sprites the player must be touching to Map switch
         Map map;//This will be used to hold the map tiles and draw them
         Map BackMap;// this is used for the background of the map, loading just like the other map but without collision and a darker set of tiles
+        string mapName;//used to determine if a player should load
 
         //MenuThings
         int SHeight = 1080; int SWidth = 1920;//this is the size of the display, i do not recommend editing these, it can cause things to break
@@ -51,15 +66,21 @@ namespace Kuessaria
         //Camera
         Camera Camera;//This is the camera that follows the player as it moves around the world
         //Enemy
-        List<Enemy> Slimes = new List<Enemy>();//This is the list that holds all the slimes in the game
-        Enemy BossSlime;// this is the giant BossSlime that has increased damage and Health
+        Dictionary<int, Enemy> EnemyList = new Dictionary<int, Enemy>();//This is the list that holds all the slimes in the game
+
+        //Friendly Players
+        Dictionary<int, EntitySprite> friendlyPlayers = new Dictionary<int, EntitySprite>();
+
+        //Weapons
+        List<Weapon> weapons = new List<Weapon>();
 
         //player sprites
         PlayerStats Player;//This is the main character sprite, that holds the players stats and positions
         const int Width = 72;//This is the const I made for easy editing of the Player sprites Width
         const int Height = 100;// The same as the last but for height
         SpriteFont PlayerFont;//This is the font i use for the menu in the top left and the Health above the slimes
-        Sword sword;// This is the sword the character weilds, used for collision detection against the mobs to ensue damage
+        Weapon sword;// This is the sword the character weilds, used for collision detection against the mobs to ensue damage
+
         ////Background Sprites
         Background Scrolling1;// this is the background that follows the character
 
@@ -85,7 +106,21 @@ namespace Kuessaria
             Camera = new Camera(GraphicsDevice.Viewport);//this initializes the camera, further explanation in the camera class
             map = new Map();// this initializes the map
             BackMap = new Map();// this initializes the background map
+            mapName = "World1";
+
+            //Server attributes
+            client = new TcpClient();
+            client.NoDelay = true;
+
+
+            readStream = new MemoryStream();
+            reader = new BinaryReader(readStream);
+
+            writeStream = new MemoryStream();
+            writer = new BinaryWriter(writeStream);
+
             base.Initialize();//this initializes the base game
+            
         }
 
 
@@ -99,7 +134,7 @@ namespace Kuessaria
             menu2 = Content.Load<Texture2D>("StatsExtended");
             menu3 = Content.Load<Texture2D>("LevelUp");
 
-            sword = new Sword(Content.Load<Texture2D>("Sword"), new Rectangle(0, 0, 59, 100));//this initalizes the sword loading in the sword texture and making a rectangle that represents the sword in game
+            sword = new Weapon(Content.Load<Texture2D>("Sword"), new Rectangle(0, 0, 59, 100), Player);//this initalizes the sword loading in the sword texture and making a rectangle that represents the sword in game
 
             font = Content.Load<SpriteFont>("Load");//This loads the content for the font
             PlayerFont = Content.Load<SpriteFont>("PlayerName");//this loads the content for the playerfont
@@ -107,10 +142,8 @@ namespace Kuessaria
             Tiles.Content = Content;// this loads the content for the tiles class
             Load = new input(Keyboard.GetState(), Keyboard.GetState());// this loads the input method for the load menu
 
-
+            //TODO: Read this file name from the network
             BackMap.Generate(BackMap.Read("BackMap.txt"), 75);// this reads in the map and generates it
-
-
             map.Generate(map.Read("Map.txt"), 75);// this reads in the map and generates it
 
            
@@ -162,21 +195,28 @@ namespace Kuessaria
                         if (Typed == "")//if typed was blank
                         {
                             Player = new PlayerStats(Content.Load<Texture2D>("player"), Width, Height, 8);// it will generate a player with the default settings
+                            sword = new Weapon(Content.Load<Texture2D>("Sword"), new Rectangle(0, 0, 59, 100), Player);
                             for (int i = 0; i < 25; i++)//this adds 30 slimes to the list of slimes for use in the game
-                                Slimes.Add(new Enemy(Content.Load<Texture2D>("slime"), 30, 5, new Vector2(200 + rng.Next(275, map.Width - 275), rng.Next(0, map.Height - 375)), 64, 57, 14, rng.Next(0, 1000)));
+                                EnemyList.Add(i,new Enemy(Content.Load<Texture2D>("slime"), 30, 5, new Vector2(200 + rng.Next(275, map.Width - 275), rng.Next(0, map.Height - 375)), 64, 57, 14, rng.Next(0, 1000)));
                             //this loads in the slimes using a texture, health,strength,position, a width, a height, and an amount of time before the slime spawns
-                            BossSlime = new Enemy(Content.Load<Texture2D>("slimeBoss"), 300, 20, new Vector2(map.Width / 2, map.Height - 375), 146, 131, 14, 0);// this loads in the bossslime the same way but with different values
+                            EnemyList.Add(25, new Enemy(Content.Load<Texture2D>("slimeBoss"), 300, 20, new Vector2(map.Width / 2, map.Height - 375), 146, 131, 14, 0));// this loads in the bossslime the same way but with different values
+                            client.Connect(IP, PORT);
+                            readBuffer = new byte[BUFFER_SIZE];
+                            client.GetStream().BeginRead(readBuffer, 0, BUFFER_SIZE, StreamReceived, null);
                             CurrentGameState = GameState.Playing;//sets the gamestate to playing
                         }
                         else// if typed wasnt blank
                         {
                             Player = new PlayerStats(Typed, Content.Load<Texture2D>("player"), Width, Height, 8, out Typed);// makes a player using typed as the name
+                            sword = new Weapon(Content.Load<Texture2D>("Sword"), new Rectangle(0, 0, 59, 100), Player);
                             if (Typed != "Invalid")// if typed Isnt equal to invalid
                                 for (int i = 0; i < 25; i++)//this adds 30 slimes to the list of slimes for use in the game
-                                    Slimes.Add(new Enemy(Content.Load<Texture2D>("slime"), 30+10*Player.Level, 5, new Vector2(rng.Next(275, map.Width - 275), rng.Next(0, map.Height - 375)), 64, 57, 14, rng.Next(0, 1000)));
+                                    EnemyList.Add(i,new Enemy(Content.Load<Texture2D>("slime"), 30+10*Player.Level, 5, new Vector2(rng.Next(275, map.Width - 275), rng.Next(0, map.Height - 375)), 64, 57, 14, rng.Next(0, 1000)));
                             //this loads in the slimes using a texture, health,strength,position, a width, a height, and an amount of time before the slime spawns
-                            BossSlime = new Enemy(Content.Load<Texture2D>("slimeBoss"), 300 + 10 * Player.Level, 20, new Vector2(map.Width / 2, map.Height - 375), 146, 131, 14, 0);// this loads in the bossslime the same way but with different values
-
+                            EnemyList.Add(25,  new Enemy(Content.Load<Texture2D>("slimeBoss"), 300 + 10 * Player.Level, 20, new Vector2(map.Width / 2, map.Height - 375), 146, 131, 14, 0));// this loads in the bossslime the same way but with different values
+                            client.Connect(IP, PORT);
+                            readBuffer = new byte[BUFFER_SIZE];
+                            client.GetStream().BeginRead(readBuffer, 0, BUFFER_SIZE, StreamReceived, null);
                             CurrentGameState = GameState.Playing;// sets the gamestate to playing
                         }
                     }
@@ -194,36 +234,47 @@ namespace Kuessaria
 
                         Player.SaveCharacter();//saves the character
                         Mouse.SetPosition(0, 0);//moves the mouse
-                        Slimes.Clear();
+                        EnemyList.Clear();
                         CurrentGameState = GameState.MainMenu;//goes to the main menu
                     }
                     //Collison
                     foreach (CollisionTiles tile in map.CollisionTiles)// checks for every tile in the maps list of tiles
                     {
                         Player.CollisionTile(tile.Rectangle, map.Width, map.Height);//if the player is touching it
-                        foreach (Enemy slime in Slimes)// and for every slime in the Slimes list
+                        foreach (Enemy enemy in EnemyList.Values)// and for every slime in the Slimes list
                         {
-                            slime.CollisionTile(tile.Rectangle, map.Width, map.Height);// if the slime is touching the tiles
+                            enemy.CollisionTile(tile.Rectangle, map.Width, map.Height);// if the slime is touching the tiles
                         }
-                        BossSlime.CollisionTile(tile.Rectangle, map.Width, map.Height);//checks if the bosslime is touching the tiles
+                        foreach (EntitySprite friendly in friendlyPlayers.Values)
+                        {
+                            friendly.CollisionTile(tile.Rectangle, map.Width, map.Height);
+                        }
+
                     }
 
                     //Enemy
-                    foreach (Enemy slime in Slimes)//for every slime in the Slimes list
+                    foreach (Enemy slime in EnemyList.Values)//for every slime in the Slimes list
                     {
                         slime.CollisionPlayer(Player);// check if its touching the player
                         slime.Update(gameTime, map, Player);// update the slime
                         slime.SlimeCollision(sword, Player);// and check if a sword is hitting it
-
-
                     }
-                    BossSlime.CollisionPlayer(Player);//does all the same for the boss slime
-                    BossSlime.Update(gameTime, map, Player);
-                    BossSlime.SlimeCollision(sword, Player);
+
 
                     //Player Sprite
-                    Player.Update(gameTime, Player);//updates the player sprite
-                    sword.update(Mouse.GetState(), GraphicsDevice.Viewport, Player);// updates the sword
+                    Player.Update(gameTime, Player, client, writer,writeStream);//updates the player sprite
+                    sword.update(Mouse.GetState(), GraphicsDevice.Viewport, sword.owner);// updates the sword
+
+                    //Friendlies Sprites
+                    foreach(EntitySprite friendly in friendlyPlayers.Values)
+                    {
+                        friendly.Update(gameTime);
+                    }
+                    foreach(Weapon wep in weapons)
+                    {
+                        wep.Update();
+                    }
+
                     //Camera
                     Camera.Update(gameTime, Player, map.Width, map.Height, Scrolling1.rectangle);// updates the camera
                     ////Scrolling
@@ -290,18 +341,203 @@ namespace Kuessaria
 
 
                     //Enemy
-                    foreach (Enemy slime in Slimes)//draws the slimes
+                    foreach (Enemy enemy in EnemyList.Values)//draws the slimes
                     {
-                        slime.Draw(spriteBatch, PlayerFont);
+                        enemy.Draw(spriteBatch, PlayerFont);
                     }
-                    BossSlime.Draw(spriteBatch, PlayerFont);//draws the boss4
+
+
+
                     //Player           
-                    Player.Draw(spriteBatch, PlayerFont, graphics.GraphicsDevice.Viewport, Keyboard.GetState(),menu1,menu2,menu3,Camera.centrer,Scrolling1.rectangle);//draws the player
+                    Player.Draw(spriteBatch);//draws the player
+                    Player.DrawStatsDisplay(spriteBatch, PlayerFont, graphics.GraphicsDevice.Viewport, Keyboard.GetState(), menu1, menu2, menu3, Camera.centrer, Scrolling1.rectangle);//it then draws the stats menu in the top left
                     sword.Draw(spriteBatch, Player);// draws the sword
+
+                    //Friendlies Sprites
+                    foreach (EntitySprite friendly in friendlyPlayers.Values)
+                    {
+                        friendly.Draw(spriteBatch);
+                    }
+                    foreach (Weapon wep in weapons)
+                    {
+                        wep.Draw(spriteBatch,wep.owner);
+                    }
+
 
 
                     spriteBatch.End();
                     break;
+            }
+        }
+        private void StreamReceived(IAsyncResult ar)
+        {
+            int bytesRead = 0;
+            try
+            {
+                lock(client.GetStream())
+                {
+                    bytesRead = client.GetStream().EndRead(ar);
+                }
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine("Connection error");
+            }
+
+            if (bytesRead == 0)//Bad response
+            {
+                client.Close();
+                return;
+            }
+
+            byte[] data = new byte[bytesRead];
+            
+            for (int i = 0; i < bytesRead; i++)
+            {
+                data[i] = readBuffer[i];
+            }
+
+            ProcessMessage(data);
+            
+
+            client.GetStream().BeginRead(readBuffer, 0, BUFFER_SIZE, StreamReceived, null);
+        }
+
+        private void ProcessMessage(byte[] data)
+        {
+            //reset read stream
+            readStream.SetLength(0);
+            readStream.Position = 0;
+
+            readStream.Write(data,0,data.Length);
+            readStream.Position = 0;
+
+            Protocol p;
+            try
+            {
+                
+                p = (Protocol)reader.ReadByte();
+
+                if (p==Protocol.Connected)
+                {
+                    byte id = reader.ReadByte();
+                    string ip = reader.ReadString();
+
+                    writeStream.Position = 0;
+                    writer.Write((byte)Protocol.Load);
+                    writer.Write(Convert.ToInt32(Player.Position.X));
+                    writer.Write(Convert.ToInt32(Player.Position.Y));
+                    writer.Write(mapName);
+                    SendData(GetDataFromMemoryStream(writeStream));
+                    
+
+                }
+                else if (p == Protocol.Disconnected)
+                {
+                    byte id = reader.ReadByte();
+                    string ip = reader.ReadString();
+                    if(friendlyPlayers.ContainsKey(id))
+                    { 
+                        friendlyPlayers.Remove(id);
+                    }
+                }
+                else if (p == Protocol.MapSwitch)
+                {
+                 
+                    int x = reader.ReadInt32();
+                    int y = reader.ReadInt32();
+                    string map = reader.ReadString();
+                    byte id = reader.ReadByte();
+                    string ip = reader.ReadString();
+
+                    if (map == mapName)
+                    {
+                        friendlyPlayers.Add(id, new EntitySprite(Content.Load<Texture2D>("player2"), new Vector2(x, y), Width, Height, 8));
+                    }
+                    else if (friendlyPlayers.ContainsKey(id))
+                    {
+                        friendlyPlayers.Remove(id);
+                    }
+                }
+                else if (p == Protocol.Load)
+                {
+       
+                    int x = reader.ReadInt32();
+                    int y = reader.ReadInt32();
+                    string map = reader.ReadString();
+                    byte id = reader.ReadByte();
+                    string ip = reader.ReadString();
+
+                    if (map == mapName)
+                    {
+
+                        friendlyPlayers.Add(id, new EntitySprite(Content.Load<Texture2D>("player2"), new Vector2(x, y), Width, Height, 8));
+
+                        writeStream.Position = 0;
+                        writer.Write((byte)Protocol.MapSwitch);
+                        writer.Write(Convert.ToInt32(Player.Position.X));
+                        writer.Write(Convert.ToInt32(Player.Position.Y));
+                        writer.Write(mapName);
+                        SendData(GetDataFromMemoryStream(writeStream));
+                    }
+                }
+                else if (p == Protocol.PlayerMoved)
+                {
+                    float x = reader.ReadSingle();
+                    float y = reader.ReadSingle();
+                    byte id = reader.ReadByte();
+                    string ip = reader.ReadString();
+
+                    if (friendlyPlayers.ContainsKey(id))
+                    {
+                        friendlyPlayers[id].velocity = new Vector2(x, y);
+                    }
+                }
+
+            }
+            catch (Exception e)
+            {
+                System.Windows.Forms.MessageBox.Show("Error:" + e.Message);
+            }
+        }
+        /// <summary>
+        /// Converts a MemoryStream to a byte array
+        /// </summary>
+        /// <param name="ms">MemoryStream to convert</param>
+        /// <returns>Byte array representation of the data</returns>
+        private byte[] GetDataFromMemoryStream(MemoryStream ms)
+        {
+            byte[] result;
+
+            //Async method called this, so lets lock the object to make sure other threads/async calls need to wait to use it.
+            lock (ms)
+            {
+                int bytesWritten = (int)ms.Position;
+                result = new byte[bytesWritten];
+
+                ms.Position = 0;
+                ms.Read(result, 0, bytesWritten);
+            }
+
+            return result;
+        }
+        /// <summary>
+        /// Code to actually send the data to the client
+        /// </summary>
+        /// <param name="b">Data to send</param>
+        public void SendData(byte[] b)
+        {
+            //Try to send the data.  If an exception is thrown, disconnect the client
+            try
+            {
+                lock (client.GetStream())
+                {
+                    client.GetStream().BeginWrite(b, 0, b.Length, null, null);
+                }
+            }
+            catch (Exception e)
+            {
+                System.Windows.Forms.MessageBox.Show("Error sending message: " + e);
             }
         }
     }

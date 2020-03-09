@@ -37,3 +37,44 @@ D:\Kuess\Final Project\Kuessaria\Kuessaria\Kuessaria\obj\x86\Release\Kuessaria.c
 D:\Kuess\Final Project\Kuessaria\Kuessaria\Kuessaria\obj\x86\Release\Kuessaria.csproj.CopyComplete
 D:\Kuess\Final Project\Kuessaria\Kuessaria\Kuessaria\obj\x86\Release\Kuessaria.exe
 D:\Kuess\Final Project\Kuessaria\Kuessaria\Kuessaria\obj\x86\Release\Kuessaria.pdb
+C:\Users\kyle9\Desktop\4907-xna-game\Kuessaria\Kuessaria\Kuessaria\bin\x86\Release\Content\Backgrounds\Background.xnb
+C:\Users\kyle9\Desktop\4907-xna-game\Kuessaria\Kuessaria\Kuessaria\bin\x86\Release\Content\Blocks\Dirt.xnb
+C:\Users\kyle9\Desktop\4907-xna-game\Kuessaria\Kuessaria\Kuessaria\bin\x86\Release\Content\player.xnb
+C:\Users\kyle9\Desktop\4907-xna-game\Kuessaria\Kuessaria\Kuessaria\bin\x86\Release\Content\Backgrounds\MainMenu.xnb
+C:\Users\kyle9\Desktop\4907-xna-game\Kuessaria\Kuessaria\Kuessaria\bin\x86\Release\Content\Buttons\Button1.xnb
+C:\Users\kyle9\Desktop\4907-xna-game\Kuessaria\Kuessaria\Kuessaria\bin\x86\Release\Content\Blocks\Tile2.xnb
+C:\Users\kyle9\Desktop\4907-xna-game\Kuessaria\Kuessaria\Kuessaria\bin\x86\Release\Content\Blocks\Tile1.xnb
+C:\Users\kyle9\Desktop\4907-xna-game\Kuessaria\Kuessaria\Kuessaria\bin\x86\Release\Content\Blocks\Tile3.xnb
+C:\Users\kyle9\Desktop\4907-xna-game\Kuessaria\Kuessaria\Kuessaria\bin\x86\Release\Content\Backgrounds\LoadMenu.xnb
+C:\Users\kyle9\Desktop\4907-xna-game\Kuessaria\Kuessaria\Kuessaria\bin\x86\Release\Content\slime.xnb
+C:\Users\kyle9\Desktop\4907-xna-game\Kuessaria\Kuessaria\Kuessaria\bin\x86\Release\Content\bat.xnb
+C:\Users\kyle9\Desktop\4907-xna-game\Kuessaria\Kuessaria\Kuessaria\bin\x86\Release\Content\slimeBoss.xnb
+C:\Users\kyle9\Desktop\4907-xna-game\Kuessaria\Kuessaria\Kuessaria\bin\x86\Release\Content\Sword.xnb
+C:\Users\kyle9\Desktop\4907-xna-game\Kuessaria\Kuessaria\Kuessaria\bin\x86\Release\Content\Buttons\Button2.xnb
+C:\Users\kyle9\Desktop\4907-xna-game\Kuessaria\Kuessaria\Kuessaria\bin\x86\Release\Content\Buttons\Button3.xnb
+C:\Users\kyle9\Desktop\4907-xna-game\Kuessaria\Kuessaria\Kuessaria\bin\x86\Release\Content\Backgrounds\Instructions.xnb
+C:\Users\kyle9\Desktop\4907-xna-game\Kuessaria\Kuessaria\Kuessaria\bin\x86\Release\Content\LevelUp.xnb
+C:\Users\kyle9\Desktop\4907-xna-game\Kuessaria\Kuessaria\Kuessaria\bin\x86\Release\Content\Stats.xnb
+C:\Users\kyle9\Desktop\4907-xna-game\Kuessaria\Kuessaria\Kuessaria\bin\x86\Release\Content\StatsExtended.xnb
+C:\Users\kyle9\Desktop\4907-xna-game\Kuessaria\Kuessaria\Kuessaria\bin\x86\Release\Content\Load.xnb
+C:\Users\kyle9\Desktop\4907-xna-game\Kuessaria\Kuessaria\Kuessaria\bin\x86\Release\Content\PlayerName.xnb
+C:\Users\kyle9\Desktop\4907-xna-game\Kuessaria\Kuessaria\Kuessaria\bin\x86\Release\Kuessaria.exe
+C:\Users\kyle9\Desktop\4907-xna-game\Kuessaria\Kuessaria\Kuessaria\bin\x86\Release\Kuessaria.pdb
+C:\Users\kyle9\Desktop\4907-xna-game\Kuessaria\Kuessaria\Kuessaria\bin\x86\Release\Microsoft.Xna.Framework.dll
+C:\Users\kyle9\Desktop\4907-xna-game\Kuessaria\Kuessaria\Kuessaria\bin\x86\Release\Microsoft.Xna.Framework.Game.dll
+C:\Users\kyle9\Desktop\4907-xna-game\Kuessaria\Kuessaria\Kuessaria\bin\x86\Release\Microsoft.Xna.Framework.GamerServices.dll
+C:\Users\kyle9\Desktop\4907-xna-game\Kuessaria\Kuessaria\Kuessaria\bin\x86\Release\Microsoft.Xna.Framework.Graphics.dll
+C:\Users\kyle9\Desktop\4907-xna-game\Kuessaria\Kuessaria\Kuessaria\bin\x86\Release\Microsoft.Xna.Framework.Input.Touch.dll
+C:\Users\kyle9\Desktop\4907-xna-game\Kuessaria\Kuessaria\Kuessaria\bin\x86\Release\Microsoft.Xna.Framework.xml
+C:\Users\kyle9\Desktop\4907-xna-game\Kuessaria\Kuessaria\Kuessaria\bin\x86\Release\Microsoft.Xna.Framework.Game.xml
+C:\Users\kyle9\Desktop\4907-xna-game\Kuessaria\Kuessaria\Kuessaria\bin\x86\Release\Microsoft.Xna.Framework.Graphics.xml
+C:\Users\kyle9\Desktop\4907-xna-game\Kuessaria\Kuessaria\Kuessaria\bin\x86\Release\Microsoft.Xna.Framework.GamerServices.xml
+C:\Users\kyle9\Desktop\4907-xna-game\Kuessaria\Kuessaria\Kuessaria\bin\x86\Release\Microsoft.Xna.Framework.Input.Touch.xml
+C:\Users\kyle9\Desktop\4907-xna-game\Kuessaria\Kuessaria\Kuessaria\obj\x86\Release\Kuessaria.csprojAssemblyReference.cache
+C:\Users\kyle9\Desktop\4907-xna-game\Kuessaria\Kuessaria\Kuessaria\obj\x86\Release\Microsoft.Xna.Framework.RuntimeProfile.txt
+C:\Users\kyle9\Desktop\4907-xna-game\Kuessaria\Kuessaria\Kuessaria\obj\x86\Release\Kuessaria.csproj.CoreCompileInputs.cache
+C:\Users\kyle9\Desktop\4907-xna-game\Kuessaria\Kuessaria\Kuessaria\obj\x86\Release\Kuessaria.csproj.CopyComplete
+C:\Users\kyle9\Desktop\4907-xna-game\Kuessaria\Kuessaria\Kuessaria\obj\x86\Release\Kuessaria.exe
+C:\Users\kyle9\Desktop\4907-xna-game\Kuessaria\Kuessaria\Kuessaria\obj\x86\Release\Kuessaria.pdb
+C:\Users\kyle9\Desktop\4907-xna-game\Kuessaria\Kuessaria\Kuessaria\bin\x86\Release\Content\NPC1.xnb
+C:\Users\kyle9\Desktop\4907-xna-game\Kuessaria\Kuessaria\Kuessaria\bin\x86\Release\Content\player2.xnb
