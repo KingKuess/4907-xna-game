@@ -500,8 +500,8 @@ namespace Kuessaria
                 {
                     float x = reader.ReadSingle();
                     float y = reader.ReadSingle();
-                    float posX = reader.ReadSingle();
-                    float posY = reader.ReadSingle();
+                    int posX = reader.ReadInt32();
+                    int posY = reader.ReadInt32();
                     byte id = reader.ReadByte();
                     string ip = reader.ReadString();
 
