@@ -149,6 +149,8 @@ namespace Kuessaria
                 writer.Write((byte)Protocol.PlayerMoved);
                 writer.Write(this.velocity.X);
                 writer.Write(this.velocity.Y);
+                writer.Write(Convert.ToInt32(this.Position.X));
+                writer.Write(Convert.ToInt32(this.Position.Y));
                 SendData(GetDataFromMemoryStream(writeStream), client);
             }
             else if (Keyboard.GetState().IsKeyDown(Keys.A))// this does the same but for left
@@ -159,6 +161,8 @@ namespace Kuessaria
                 writer.Write((byte)Protocol.PlayerMoved);
                 writer.Write(this.velocity.X);
                 writer.Write(this.velocity.Y);
+                writer.Write(Convert.ToInt32(this.Position.X));
+                writer.Write(Convert.ToInt32(this.Position.Y));
                 SendData(GetDataFromMemoryStream(writeStream), client);
             }
             else// if the player isnt pressing left or right it will do all this
@@ -206,6 +210,8 @@ namespace Kuessaria
                 writer.Write((byte)Protocol.PlayerMoved);
                 writer.Write(this.velocity.X);
                 writer.Write(this.velocity.Y);
+                writer.Write(Convert.ToInt32(this.Position.X));
+                writer.Write(Convert.ToInt32(this.Position.Y));
                 SendData(GetDataFromMemoryStream(writeStream),client);
             }
 

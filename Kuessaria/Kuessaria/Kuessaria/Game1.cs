@@ -23,7 +23,7 @@ namespace Kuessaria
     {
         //Networking attributes
         TcpClient client;
-        string IP = "127.0.0.1";
+        string IP = "192.168.0.11";
         int PORT = 1490;
         int BUFFER_SIZE = 2048;
         byte[] readBuffer;
@@ -485,11 +485,14 @@ namespace Kuessaria
                 {
                     float x = reader.ReadSingle();
                     float y = reader.ReadSingle();
+                    int posX = reader.ReadInt32();
+                    int posY = reader.ReadInt32();
                     byte id = reader.ReadByte();
                     string ip = reader.ReadString();
 
                     if (friendlyPlayers.ContainsKey(id))
                     {
+                        friendlyPlayers[id].Position = new Vector2(posX, posY);
                         friendlyPlayers[id].velocity = new Vector2(x, y);
                     }
                 }
