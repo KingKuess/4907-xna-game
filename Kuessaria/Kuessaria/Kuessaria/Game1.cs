@@ -23,7 +23,7 @@ namespace Kuessaria
     {
         //Networking attributes
         TcpClient client;
-        string IP = "127.0.0.1";
+        string IP = "192.168.0.11";
         int PORT = 1490;
         int BUFFER_SIZE = 2048;
         byte[] readBuffer;
@@ -188,7 +188,7 @@ namespace Kuessaria
                     break;// break to mark end of case
                 case GameState.LoadCharacter:// if its in the load character menu
                     Typed = Load.InputKey(Keyboard.GetState(), Typed);// sets typed = to the input by the user using the keyboard
-
+                    client = new TcpClient();
                     if (Keyboard.GetState().IsKeyDown(Keys.Enter) && PastKey.IsKeyUp(Keys.Enter))//checks for the enter key, and ensures enter isnt still being held down from something else
                     {
 
@@ -196,7 +196,7 @@ namespace Kuessaria
                         {
                             Player = new PlayerStats(Content.Load<Texture2D>("player"), Width, Height, 8);// it will generate a player with the default settings
                             sword = new Weapon(Content.Load<Texture2D>("Sword"), new Rectangle(0, 0, 59, 100), Player);
-                            for (int i = 0; i < 25; i++)//this adds 30 slimes to the list of slimes for use in the game
+                            for (int i = 0; i < 20; i++)//this adds 30 slimes to the list of slimes for use in the game
                                 EnemyList.Add(i,new Enemy(Content.Load<Texture2D>("slime"), 30, 5, new Vector2(200 + rng.Next(275, map.Width - 275), rng.Next(0, map.Height - 375)), 64, 57, 14, rng.Next(0, 1000)));
                             //this loads in the slimes using a texture, health,strength,position, a width, a height, and an amount of time before the slime spawns
                             EnemyList.Add(25, new Enemy(Content.Load<Texture2D>("slimeBoss"), 300, 20, new Vector2(map.Width / 2, map.Height - 375), 146, 131, 14, 0));// this loads in the bossslime the same way but with different values
@@ -210,7 +210,7 @@ namespace Kuessaria
                             Player = new PlayerStats(Typed, Content.Load<Texture2D>("player"), Width, Height, 8, out Typed);// makes a player using typed as the name
                             sword = new Weapon(Content.Load<Texture2D>("Sword"), new Rectangle(0, 0, 59, 100), Player);
                             if (Typed != "Invalid")// if typed Isnt equal to invalid
-                                for (int i = 0; i < 25; i++)//this adds 30 slimes to the list of slimes for use in the game
+                                for (int i = 0; i < 20; i++)//this adds 30 slimes to the list of slimes for use in the game
                                     EnemyList.Add(i,new Enemy(Content.Load<Texture2D>("slime"), 30+10*Player.Level, 5, new Vector2(rng.Next(275, map.Width - 275), rng.Next(0, map.Height - 375)), 64, 57, 14, rng.Next(0, 1000)));
                             //this loads in the slimes using a texture, health,strength,position, a width, a height, and an amount of time before the slime spawns
                             EnemyList.Add(25,  new Enemy(Content.Load<Texture2D>("slimeBoss"), 300 + 10 * Player.Level, 20, new Vector2(map.Width / 2, map.Height - 375), 146, 131, 14, 0));// this loads in the bossslime the same way but with different values
@@ -263,16 +263,25 @@ namespace Kuessaria
 
                     //Player Sprite
                     Player.Update(gameTime, Player, client, writer,writeStream);//updates the player sprite
-                    sword.update(Mouse.GetState(), GraphicsDevice.Viewport, sword.owner);// updates the sword
+                    sword.update(Mouse.GetState(), GraphicsDevice.Viewport, sword.owner, writer, writeStream, client);// updates the sword
 
-                    //Friendlies Sprites
+                    //Friendlies a
                     foreach(EntitySprite friendly in friendlyPlayers.Values)
                     {
                         friendly.Update(gameTime);
                     }
-                    foreach(Weapon wep in weapons)
+                    for (int i = 0; i < weapons.Count;i++)
                     {
-                        wep.Update();
+                        if (weapons[i].swinging == Weapon.Swinging.Not && !weapons[i].heal)
+                        {
+                            weapons.RemoveAt(i);
+                            i--;
+                        }
+                        else
+                        {
+                            weapons[i].update();
+
+                        }
                     }
 
                     //Camera
@@ -437,8 +446,10 @@ namespace Kuessaria
                     byte id = reader.ReadByte();
                     string ip = reader.ReadString();
                     if(friendlyPlayers.ContainsKey(id))
-                    { 
-                        friendlyPlayers.Remove(id);
+                    {
+ 
+                            friendlyPlayers.Remove(id);
+                        
                     }
                 }
                 else if (p == Protocol.MapSwitch)
@@ -452,11 +463,15 @@ namespace Kuessaria
 
                     if (map == mapName)
                     {
-                        friendlyPlayers.Add(id, new EntitySprite(Content.Load<Texture2D>("player2"), new Vector2(x, y), Width, Height, 8));
+        
+                            friendlyPlayers.Add(id, new EntitySprite(Content.Load<Texture2D>("player2"), new Vector2(x, y), Width, Height, 8));
+                        
                     }
                     else if (friendlyPlayers.ContainsKey(id))
                     {
-                        friendlyPlayers.Remove(id);
+                  
+                            friendlyPlayers.Remove(id);
+                        
                     }
                 }
                 else if (p == Protocol.Load)
@@ -470,9 +485,9 @@ namespace Kuessaria
 
                     if (map == mapName)
                     {
-
+                 
                         friendlyPlayers.Add(id, new EntitySprite(Content.Load<Texture2D>("player2"), new Vector2(x, y), Width, Height, 8));
-
+                        
                         writeStream.Position = 0;
                         writer.Write((byte)Protocol.MapSwitch);
                         writer.Write(Convert.ToInt32(Player.Position.X));
@@ -485,14 +500,51 @@ namespace Kuessaria
                 {
                     float x = reader.ReadSingle();
                     float y = reader.ReadSingle();
+                    float posX = reader.ReadSingle();
+                    float posY = reader.ReadSingle();
                     byte id = reader.ReadByte();
                     string ip = reader.ReadString();
 
                     if (friendlyPlayers.ContainsKey(id))
                     {
+                        friendlyPlayers[id].Position = new Vector2(posX, posY);                       
                         friendlyPlayers[id].velocity = new Vector2(x, y);
                     }
                 }
+                else if (p == Protocol.weaponCreated)
+                {
+                    int swung = reader.ReadByte();
+
+                    byte id = reader.ReadByte();
+                    string ip = reader.ReadString();
+
+                    if (friendlyPlayers.ContainsKey(id))
+                    {
+                        Weapon wep = new Weapon(Content.Load<Texture2D>("Sword"), new Rectangle(0, 0, 59, 100), friendlyPlayers[id]);
+                        if (swung == 0)
+                        {
+                            wep.SWUNG = Weapon.swung.left;
+                            wep.swinging = Weapon.Swinging.Is;
+
+                        }
+                        else if(swung == 1)
+                        {
+                            wep.SWUNG = Weapon.swung.right;
+                            wep.swinging = Weapon.Swinging.Is;
+
+                        }
+                        else if (swung == 2)
+                        {
+                            wep.heal = true;
+                            wep.cooldown = 100;
+                        }
+           
+                            weapons.Add(wep);
+                        
+                    }
+                }
+                
+ 
 
             }
             catch (Exception e)

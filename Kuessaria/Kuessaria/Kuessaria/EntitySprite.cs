@@ -44,7 +44,7 @@ namespace Kuessaria
         public virtual void Update(GameTime gameTime, PlayerStats stats, TcpClient client, BinaryWriter writer, MemoryStream writeStream)//this is the update method that runs constantly
         {
 
-            Move(gameTime, stats, client, writer, writeStream);//this checks if the player is moving
+            Move(gameTime, stats, client);//this checks if the player is moving
             rectangle = new Rectangle(currentFrame * Width, 0, Width, Height);//this rectangle is the one that determines what is being drawn
             origin = new Vector2(rectangle.Width / 2, rectangle.Height / 2);//this is the center of that rectangle
             Position += velocity;//this adds velocity to the position to move the object
@@ -138,9 +138,11 @@ namespace Kuessaria
             Jumped = true;//this makes sure the player cant jump again yet
 
         }
-        public virtual void Move(GameTime gameTime, PlayerStats Stats, TcpClient client, BinaryWriter writer, MemoryStream writeStream)//this determines the players movement
+        public virtual void Move(GameTime gameTime, PlayerStats Stats, TcpClient client)//this determines the players movement
 
         {
+            MemoryStream writeStream = new MemoryStream();
+            BinaryWriter writer = new BinaryWriter(writeStream);
             if (Keyboard.GetState().IsKeyDown(Keys.D))//if they are pressing d
             {
                 AnimateRight(gameTime);//it animates it to the right
@@ -149,6 +151,8 @@ namespace Kuessaria
                 writer.Write((byte)Protocol.PlayerMoved);
                 writer.Write(this.velocity.X);
                 writer.Write(this.velocity.Y);
+                writer.Write(this.Position.X);
+                writer.Write(this.Position.Y);
                 SendData(GetDataFromMemoryStream(writeStream), client);
             }
             else if (Keyboard.GetState().IsKeyDown(Keys.A))// this does the same but for left
@@ -159,6 +163,8 @@ namespace Kuessaria
                 writer.Write((byte)Protocol.PlayerMoved);
                 writer.Write(this.velocity.X);
                 writer.Write(this.velocity.Y);
+                writer.Write(this.Position.X);
+                writer.Write(this.Position.Y);
                 SendData(GetDataFromMemoryStream(writeStream), client);
             }
             else// if the player isnt pressing left or right it will do all this
@@ -206,6 +212,8 @@ namespace Kuessaria
                 writer.Write((byte)Protocol.PlayerMoved);
                 writer.Write(this.velocity.X);
                 writer.Write(this.velocity.Y);
+                writer.Write(this.Position.X);
+                writer.Write(this.Position.Y);
                 SendData(GetDataFromMemoryStream(writeStream),client);
             }
 

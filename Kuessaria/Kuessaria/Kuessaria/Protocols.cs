@@ -11,6 +11,7 @@ namespace Kuessaria
         Connected = 1,
         MapSwitch = 2,
         Load = 3,
-        PlayerMoved = 4
+        PlayerMoved = 4,
+        weaponCreated = 5
     }
 }

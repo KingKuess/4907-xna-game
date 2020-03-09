@@ -211,7 +211,12 @@ namespace ServerSide
                 {
                     if (data[0] == 4)
                     {
-                        Console.WriteLine("Player: " + sender.id + " moved.");
+                        Console.WriteLine("Player " + sender.id + " moved");
+                        foreach (byte b in data)
+                        {
+                            Console.Write(b + ", ");
+                        }
+                        Console.WriteLine();
                     }
                     c.SendData(data);
                 }
