@@ -174,7 +174,7 @@ namespace ServerSide
         /// <param name="data">Original Message in byte array format</param>
         /// <param name="ms">Message to append to the original message in MemoryStream format</param>
         /// <returns>Combined data in byte array format</returns>
-        private byte[] CombineData(byte[] data, MemoryStream ms)
+        public byte[] CombineData(byte[] data, MemoryStream ms)
         {
             //Get the byte array from the MemoryStream
             byte[] result = GetDataFromMemoryStream(ms);
@@ -230,7 +230,7 @@ namespace ServerSide
         /// Sends data to all clients
         /// </summary>
         /// <param name="data">Data to send</param>
-        private void SendData(byte[] data)
+        public void SendData(byte[] data)
         {
             foreach (Client c in client)
             {

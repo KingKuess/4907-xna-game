@@ -18,6 +18,8 @@ namespace ServerSide
         public event ConnectionEvent UserDisconnected;
         public event DataReceivedEvent DataReceived;
 
+        //Cleint attributes
+
         //The ID of this client, the constructor is only allowed to set this variable
         public readonly byte id;
 

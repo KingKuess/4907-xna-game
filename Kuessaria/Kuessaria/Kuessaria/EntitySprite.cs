@@ -212,8 +212,8 @@ namespace Kuessaria
                 writer.Write((byte)Protocol.PlayerMoved);
                 writer.Write(this.velocity.X);
                 writer.Write(this.velocity.Y);
-                writer.Write(this.Position.X);
-                writer.Write(this.Position.Y);
+                writer.Write(Convert.ToInt32(this.Position.X));
+                writer.Write(Convert.ToInt32(this.Position.Y));
                 SendData(GetDataFromMemoryStream(writeStream),client);
             }
 
@@ -299,10 +299,10 @@ namespace Kuessaria
             animtimer += (float)gameTime.ElapsedGameTime.TotalMilliseconds / 2;
             if (animtimer > interval)
             {
-                currentFrame++;
+                currentFrame--;
                 animtimer = 0;
                 if (currentFrame > Frames - 1 || currentFrame < Frames/2)
-                    currentFrame = Frames/2;
+                    currentFrame = Frames-1;
             }
 
         }
@@ -324,7 +324,7 @@ namespace Kuessaria
             }
             if (POSRect.TouchLeft(newRectangle))//if its touching the left
             {
-                Position.X = newRectangle.X - Width/2 - 2;// it keeps setting the position to the left of the block 
+                Position.X = newRectangle.X - Width/2 - 4;// it keeps setting the position to the left of the block 
             }
             if (POSRect.TouchRight(newRectangle))//if its touching the right
             {

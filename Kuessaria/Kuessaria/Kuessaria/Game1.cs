@@ -23,7 +23,7 @@ namespace Kuessaria
     {
         //Networking attributes
         TcpClient client;
-        string IP = "192.168.0.11";
+        string IP = "127.0.0.1";
         int PORT = 1490;
         int BUFFER_SIZE = 2048;
         byte[] readBuffer;
@@ -109,8 +109,8 @@ namespace Kuessaria
             mapName = "World1";
 
             //Server attributes
-            client = new TcpClient();
-            client.NoDelay = true;
+            //client = new TcpClient();
+            //client.NoDelay = true;
 
 
             readStream = new MemoryStream();
@@ -188,7 +188,6 @@ namespace Kuessaria
                     break;// break to mark end of case
                 case GameState.LoadCharacter:// if its in the load character menu
                     Typed = Load.InputKey(Keyboard.GetState(), Typed);// sets typed = to the input by the user using the keyboard
-                    client = new TcpClient();
                     if (Keyboard.GetState().IsKeyDown(Keys.Enter) && PastKey.IsKeyUp(Keys.Enter))//checks for the enter key, and ensures enter isnt still being held down from something else
                     {
 
@@ -197,9 +196,9 @@ namespace Kuessaria
                             Player = new PlayerStats(Content.Load<Texture2D>("player"), Width, Height, 8);// it will generate a player with the default settings
                             sword = new Weapon(Content.Load<Texture2D>("Sword"), new Rectangle(0, 0, 59, 100), Player);
                             for (int i = 0; i < 20; i++)//this adds 30 slimes to the list of slimes for use in the game
-                                EnemyList.Add(i,new Enemy(Content.Load<Texture2D>("slime"), 30, 5, new Vector2(200 + rng.Next(275, map.Width - 275), rng.Next(0, map.Height - 375)), 64, 57, 14, rng.Next(0, 1000)));
+                                EnemyList.Add(i,new Enemy(Content.Load<Texture2D>("zombie"), 30, 5, new Vector2(200 + rng.Next(275, map.Width - 275), rng.Next(0, map.Height - 375)), 65, 100, 20, rng.Next(0, 1000),false));
                             //this loads in the slimes using a texture, health,strength,position, a width, a height, and an amount of time before the slime spawns
-                            EnemyList.Add(25, new Enemy(Content.Load<Texture2D>("slimeBoss"), 300, 20, new Vector2(map.Width / 2, map.Height - 375), 146, 131, 14, 0));// this loads in the bossslime the same way but with different values
+                            EnemyList.Add(25, new Enemy(Content.Load<Texture2D>("slimeBoss"), 300, 20, new Vector2(map.Width / 2, map.Height - 375), 146, 131, 14, 0,false));// this loads in the bossslime the same way but with different values
                             client.Connect(IP, PORT);
                             readBuffer = new byte[BUFFER_SIZE];
                             client.GetStream().BeginRead(readBuffer, 0, BUFFER_SIZE, StreamReceived, null);
@@ -210,10 +209,15 @@ namespace Kuessaria
                             Player = new PlayerStats(Typed, Content.Load<Texture2D>("player"), Width, Height, 8, out Typed);// makes a player using typed as the name
                             sword = new Weapon(Content.Load<Texture2D>("Sword"), new Rectangle(0, 0, 59, 100), Player);
                             if (Typed != "Invalid")// if typed Isnt equal to invalid
-                                for (int i = 0; i < 20; i++)//this adds 30 slimes to the list of slimes for use in the game
-                                    EnemyList.Add(i,new Enemy(Content.Load<Texture2D>("slime"), 30+10*Player.Level, 5, new Vector2(rng.Next(275, map.Width - 275), rng.Next(0, map.Height - 375)), 64, 57, 14, rng.Next(0, 1000)));
+                                for (int i = 0; i < 20; i++)//this adds 30 slimes to the list of slimes for use in the game                                                                 slime is 64, 57
+                                    EnemyList.Add(i,new Enemy(Content.Load<Texture2D>("zombie"), 30+10*Player.Level, 5, new Vector2(rng.Next(275, map.Width - 275), rng.Next(0, map.Height - 375)), 65, 100, 20, rng.Next(0, 1000),false));
                             //this loads in the slimes using a texture, health,strength,position, a width, a height, and an amount of time before the slime spawns
-                            EnemyList.Add(25,  new Enemy(Content.Load<Texture2D>("slimeBoss"), 300 + 10 * Player.Level, 20, new Vector2(map.Width / 2, map.Height - 375), 146, 131, 14, 0));// this loads in the bossslime the same way but with different values
+                            EnemyList.Add(25,  new Enemy(Content.Load<Texture2D>("slimeBoss"), 300 + 10 * Player.Level, 20, new Vector2(map.Width / 2, map.Height - 375), 146, 131, 14, 0,false));// this loads in the bossslime the same way but with different values
+
+
+
+                            client = new TcpClient();
+                            client.NoDelay = true;
                             client.Connect(IP, PORT);
                             readBuffer = new byte[BUFFER_SIZE];
                             client.GetStream().BeginRead(readBuffer, 0, BUFFER_SIZE, StreamReceived, null);
@@ -233,6 +237,7 @@ namespace Kuessaria
                     {
 
                         Player.SaveCharacter();//saves the character
+                        client.Close();
                         Mouse.SetPosition(0, 0);//moves the mouse
                         EnemyList.Clear();
                         CurrentGameState = GameState.MainMenu;//goes to the main menu
@@ -542,6 +547,10 @@ namespace Kuessaria
                             weapons.Add(wep);
                         
                     }
+                }
+                else if (p == Protocol.enemyMoved)
+                {
+
                 }
                 
  

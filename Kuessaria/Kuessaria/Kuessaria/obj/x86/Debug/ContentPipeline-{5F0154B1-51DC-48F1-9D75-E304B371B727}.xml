@@ -208,6 +208,15 @@
       <Output>C:\Users\kyle9\Desktop\4907-xna-game\Kuessaria\Kuessaria\Kuessaria\bin\x86\Debug\Content\player2.xnb</Output>
       <Time>2020-03-08T22:38:14.0472822-04:00</Time>
     </Item>
+    <Item>
+      <Source>zombie.png</Source>
+      <Name>zombie</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+      <Options>None</Options>
+      <Output>C:\Users\kyle9\Desktop\4907-xna-game\Kuessaria\Kuessaria\Kuessaria\bin\x86\Debug\Content\zombie.xnb</Output>
+      <Time>2020-03-09T20:29:38.8282497-04:00</Time>
+    </Item>
     <BuildSuccessful>true</BuildSuccessful>
     <Settings>
       <ContentProjectGUID>{5F0154B1-51DC-48F1-9D75-E304B371B727}</ContentProjectGUID>

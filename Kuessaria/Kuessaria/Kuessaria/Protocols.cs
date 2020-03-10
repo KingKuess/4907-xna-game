@@ -12,6 +12,7 @@ namespace Kuessaria
         MapSwitch = 2,
         Load = 3,
         PlayerMoved = 4,
-        weaponCreated = 5
+        weaponCreated = 5,
+        enemyMoved = 6
     }
 }

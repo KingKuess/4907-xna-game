@@ -23,6 +23,7 @@ namespace Kuessaria
         int action;// this is a random number to decide which action will happen
         int spawntimer;// this is the timer that will determine if the slime exists yet or not
         int exist = 0;//it will not exist to begin with and thus exist will start at zero and wait until it is at spawntimer to exist
+        bool passive;
         Random rng = new Random();//a random number generated for rng purposes
         enum Spawned//this enum will determine if it is spawned or not
         {
@@ -30,7 +31,7 @@ namespace Kuessaria
             Is,
         }
         Spawned currentSpawned = Spawned.Not;// sets the default of the currentspawned enum to not spawned
-        public Enemy(Texture2D newTexture, int health, int strength, Vector2 newPosition, int newWidth, int newHeight, int frames, int newspawntimer)//this constructor uses the texture, health, strength, position, width, height, and frames in the animation, as well as the spawn timer to make a new enemy
+        public Enemy(Texture2D newTexture, int health, int strength, Vector2 newPosition, int newWidth, int newHeight, int frames, int newspawntimer, bool passive)//this constructor uses the texture, health, strength, position, width, height, and frames in the animation, as well as the spawn timer to make a new enemy
         {
             // this sets all the variables of the enemy to the constructors input
             spawntimer = newspawntimer;
@@ -43,6 +44,7 @@ namespace Kuessaria
             Position = newPosition;
             rectangle = new Rectangle((int)newPosition.X, (int)newPosition.Y, Width, Height);//creates a new rectangle using the position, width, and height
             Frames = frames;
+            this.passive = passive;
         }
 
         public void Update(GameTime gameTime, Map MAP, PlayerStats player)//this is the update method and takes in gameTime to determine time elapsed, the MAP for its width and height and the player for all their information
@@ -209,21 +211,40 @@ namespace Kuessaria
         }
         public void SlimeCollision(Weapon sword, PlayerStats player)// this checks to see if the enemy is colliding with a sword
         {
-            if (sword.POSRect.Intersects(POSRect) && sword.swinged == true && hit == false)//if the swords rectangle is intersecting the slimes, and the sword is being swung, and the slime hasnt been hit recently
+            if (sword.POSRect.Intersects(POSRect) && sword.swinged == true && hit == false )//if the swords rectangle is intersecting the slimes, and the sword is being swung, and the slime hasnt been hit recently
             {
 
+
                 Health += -player.strength;//the slimes health gets the players strength taken out of it
-                if (sword.SWUNG == Weapon.swung.left)// if the sword was swung to the left
+                if (passive)
                 {
-                    action = 40;//sets the slime action to 40, making it run away to the left
-                    movetimer = 0;//sets movetimer to 0 so that it doesnt instantly turn back around
-                    
+                    if (sword.SWUNG == Weapon.swung.left)// if the sword was swung to the left
+                    {
+                        action = 40;//sets the slime action to 40, making it run away to the left
+                        movetimer = 0;//sets movetimer to 0 so that it doesnt instantly turn back around
+
+                    }
+                    if (sword.SWUNG == Weapon.swung.right)// this is the same but makes the action run to the right
+                    {
+                        action = 20;
+                        movetimer = 0;
+
+                    }
                 }
-                if (sword.SWUNG == Weapon.swung.right)// this is the same but makes the action run to the right
+                else
                 {
-                    action = 20;
-                    movetimer = 0;
-                    
+                    if (sword.SWUNG == Weapon.swung.left)// if the sword was swung to the left
+                    {
+                        action = 20;//sets the slime action to 20, making it run towards the enemy to the left
+                        movetimer = 0;//sets movetimer to 0 so that it doesnt instantly turn back around
+
+                    }
+                    if (sword.SWUNG == Weapon.swung.right)// this is the same but makes the action run to the right
+                    {
+                        action = 40;
+                        movetimer = 0;
+
+                    }
                 }
                 hit = true;//sets the slimes hit boolean to true
                 hitTimer = 60;// and the time before it can get hit again to 60

@@ -112,3 +112,4 @@ C:\Users\kyle9\Desktop\4907-xna-game\Kuessaria\Kuessaria\Kuessaria\obj\x86\Debug
 C:\Users\kyle9\Desktop\4907-xna-game\Kuessaria\Kuessaria\Kuessaria\obj\x86\Debug\Kuessaria.pdb
 C:\Users\kyle9\Desktop\4907-xna-game\Kuessaria\Kuessaria\Kuessaria\bin\x86\Debug\Content\NPC1.xnb
 C:\Users\kyle9\Desktop\4907-xna-game\Kuessaria\Kuessaria\Kuessaria\bin\x86\Debug\Content\player2.xnb
+C:\Users\kyle9\Desktop\4907-xna-game\Kuessaria\Kuessaria\Kuessaria\bin\x86\Debug\Content\zombie.xnb

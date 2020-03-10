@@ -46,7 +46,7 @@
     <Compile Include="Action.cs" />
     <Compile Include="Client.cs" />
     <Compile Include="Delegates.cs" />
-    <Compile Include="Dispatcher.cs" />
+    <Compile Include="NPCHandler.cs" />
     <Compile Include="Listener.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
