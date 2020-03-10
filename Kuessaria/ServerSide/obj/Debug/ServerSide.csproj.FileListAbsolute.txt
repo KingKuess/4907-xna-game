@@ -1,0 +1,7 @@
+C:\Users\kyle9\Desktop\4907-xna-game\Kuessaria\ServerSide\bin\Debug\ServerSide.exe.config
+C:\Users\kyle9\Desktop\4907-xna-game\Kuessaria\ServerSide\bin\Debug\ServerSide.exe
+C:\Users\kyle9\Desktop\4907-xna-game\Kuessaria\ServerSide\bin\Debug\ServerSide.pdb
+C:\Users\kyle9\Desktop\4907-xna-game\Kuessaria\ServerSide\obj\Debug\ServerSide.csprojAssemblyReference.cache
+C:\Users\kyle9\Desktop\4907-xna-game\Kuessaria\ServerSide\obj\Debug\ServerSide.csproj.CoreCompileInputs.cache
+C:\Users\kyle9\Desktop\4907-xna-game\Kuessaria\ServerSide\obj\Debug\ServerSide.exe
+C:\Users\kyle9\Desktop\4907-xna-game\Kuessaria\ServerSide\obj\Debug\ServerSide.pdb

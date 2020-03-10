@@ -44,7 +44,7 @@ namespace Kuessaria
         public virtual void Update(GameTime gameTime, PlayerStats stats, TcpClient client, BinaryWriter writer, MemoryStream writeStream)//this is the update method that runs constantly
         {
 
-            Move(gameTime, stats, client, writer, writeStream);//this checks if the player is moving
+            Move(gameTime, stats, client);//this checks if the player is moving
             rectangle = new Rectangle(currentFrame * Width, 0, Width, Height);//this rectangle is the one that determines what is being drawn
             origin = new Vector2(rectangle.Width / 2, rectangle.Height / 2);//this is the center of that rectangle
             Position += velocity;//this adds velocity to the position to move the object
@@ -138,9 +138,11 @@ namespace Kuessaria
             Jumped = true;//this makes sure the player cant jump again yet
 
         }
-        public virtual void Move(GameTime gameTime, PlayerStats Stats, TcpClient client, BinaryWriter writer, MemoryStream writeStream)//this determines the players movement
+        public virtual void Move(GameTime gameTime, PlayerStats Stats, TcpClient client)//this determines the players movement
 
         {
+            MemoryStream writeStream = new MemoryStream();
+            BinaryWriter writer = new BinaryWriter(writeStream);
             if (Keyboard.GetState().IsKeyDown(Keys.D))//if they are pressing d
             {
                 AnimateRight(gameTime);//it animates it to the right
@@ -297,10 +299,10 @@ namespace Kuessaria
             animtimer += (float)gameTime.ElapsedGameTime.TotalMilliseconds / 2;
             if (animtimer > interval)
             {
-                currentFrame++;
+                currentFrame--;
                 animtimer = 0;
                 if (currentFrame > Frames - 1 || currentFrame < Frames/2)
-                    currentFrame = Frames/2;
+                    currentFrame = Frames-1;
             }
 
         }
@@ -322,7 +324,7 @@ namespace Kuessaria
             }
             if (POSRect.TouchLeft(newRectangle))//if its touching the left
             {
-                Position.X = newRectangle.X - Width/2 - 2;// it keeps setting the position to the left of the block 
+                Position.X = newRectangle.X - Width/2 - 4;// it keeps setting the position to the left of the block 
             }
             if (POSRect.TouchRight(newRectangle))//if its touching the right
             {

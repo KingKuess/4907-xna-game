@@ -3,7 +3,9 @@ using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
+using System.Net.Sockets;
 using System.Text;
 
 namespace Kuessaria
@@ -73,16 +75,16 @@ namespace Kuessaria
     class Weapon : Sprite//this is the sword sprite, it has a ton of stuff going on inside
     {
         Vector2 spriteOrigin;//this is the center of the sprite
-        bool heal = false;//this is the bool to see if they are healing
-        int cooldown;// this is the cooldown on the heal
-        public PlayerStats owner { get; set; }//the wielder of the weapon
+        public bool heal = false;//this is the bool to see if they are healing
+        public int cooldown;// this is the cooldown on the heal
+        public EntitySprite owner { get; set; }//the wielder of the weapon
         
-        enum Swinging//these are enums used for the swinging switch
+        public enum Swinging//these are enums used for the swinging switch
         {
             Is,
             Not,
         }
-        Swinging swinging = Swinging.Not;//this is the Swinging used in the swinging switch
+        public Swinging swinging = Swinging.Not;//this is the Swinging used in the swinging switch
         float timer;// this is a timer used for swing time
         int interval = 125;// this is the interval the swing may last
         float rotation;// this holds the rotation value of the sword
@@ -94,7 +96,7 @@ namespace Kuessaria
         }
         public swung SWUNG;//this is the swung that SWUNG
         public bool swinged;//this is a bool to check if they swung named swinged
-        public Weapon(Texture2D newTexture, Rectangle newRectangle, PlayerStats Owner)////this creates the sword using just a texture and rectangle
+        public Weapon(Texture2D newTexture, Rectangle newRectangle, EntitySprite Owner)////this creates the sword using just a texture and rectangle
         {
             owner = Owner;
             Position = new Vector2(newRectangle.X, newRectangle.Y);//it sets the position using the rectangles position
@@ -104,22 +106,62 @@ namespace Kuessaria
             spriteOrigin = new Vector2(rectangle.Width / 2, rectangle.Height);// and the origin is the center of the width of thw sword but the bottom of the height, that wat it rotats from the handle, not the center
 
         }
-        public void update(MouseState mouse, Viewport view, PlayerStats player)//this is the update method
+        public void update()//this is the update method
+        {
+            if (cooldown > 0)// the the cooldown is greater than 0
+            {
+                cooldown--;//it reduces the cooldown
+
+
+            }
+            switch (swinging)// the switch to see if their swinging
+            {
+                case Swinging.Not://if their not
+                    {
+                        rotation = 0;// it removes the rotation from the sword
+
+                        break;
+                    }
+                case Swinging.Is://if they are swinging
+                    {
+
+                        swing();//it swings
+                        timer++;// and adds to the time
+                        if (timer > interval - 100 / .98)// if the timer has been running for longer than the interval - aspeed
+                        {
+                            timer = 0;//it sets the timer to 0
+                            swinging = Swinging.Not;//and it sets swinging to not
+                            swinged = false;//and swinged to false to reset all the stuff
+
+                        }
+                        break;
+                    }
+
+            }
+        }
+        public void update(MouseState mouse, Viewport view, EntitySprite player, BinaryWriter writer, MemoryStream writeStream, TcpClient client)//this is the update method
         {
             if (mouse.X < view.Width /2 && swinged == false)//if the mouse if on the left side of the screen it sets swung to left
             {
                 SWUNG = swung.left;
+
+
             }
             else if ( mouse.X >= view.Width/2 && swinged == false)//if its on the right and they havent swung it sets it to right
             {
                 SWUNG = swung.right;
+      
             }
-            if (mouse.RightButton == ButtonState.Pressed && player.mana >= 20 && cooldown <= 0)//if they rightclick and it isnt on cooldown and they have enough mana
+            if (mouse.RightButton == ButtonState.Pressed && ((PlayerStats)player).mana >= 20 && cooldown <= 0)//if they rightclick and it isnt on cooldown and they have enough mana
             {
-                player.mana = -20;//it takes the mana
-                player.health = player.intelligence;//and heals them
+                ((PlayerStats)player).mana = -20;//it takes the mana
+                ((PlayerStats)player).health = ((PlayerStats)player).intelligence;//and heals them
                 cooldown = 100;//and puts the spell on CD
                 heal = true;//and makes the heal bool true
+                writeStream.Position = 0;
+                writer.Write((byte)Protocol.weaponCreated);
+                writer.Write((byte)2);
+                SendData(GetDataFromMemoryStream(writeStream), client);
             }
             else if (cooldown > 0)// the the cooldown is greater than 0
             {
@@ -141,10 +183,23 @@ namespace Kuessaria
                     }
                 case Swinging.Is://if they are swinging
                     {
-                        
-                        swing(mouse, view, player);//it swings
+                        if (timer == 0)
+                        {
+                            writeStream.Position = 0;
+                            writer.Write((byte)Protocol.weaponCreated);
+                            if (mouse.X < view.Width / 2)
+                            {
+                                writer.Write((byte)0);
+                            }
+                            else
+                            {
+                                writer.Write((byte)1);
+                            }
+                            SendData(GetDataFromMemoryStream(writeStream), client);
+                        }
+                        swing();//it swings
                         timer++;// and adds to the time
-                        if (timer > interval - player.aSpeed/.98)// if the timer has been running for longer than the interval - aspeed
+                        if (timer > interval - ((PlayerStats)player).aSpeed/.98)// if the timer has been running for longer than the interval - aspeed
                         {
                             timer = 0;//it sets the timer to 0
                             swinging = Swinging.Not;//and it sets swinging to not
@@ -156,18 +211,18 @@ namespace Kuessaria
                     
             }
         }
-        void swing(MouseState mouse, Viewport view, PlayerStats player)
+        void swing()
         {
             
             switch (SWUNG)//this switch for which way they swung determines the position of the sword
             {
                 case swung.left://if they swung left
                     {
-                        POSRect = new Rectangle((int)player.POSRect.X - rectangle.Width * 2, (int)player.POSRect.Y - rectangle.Height*1 / 4, rectangle.Width * 2, rectangle.Height*3/2);
+                        POSRect = new Rectangle((int)owner.POSRect.X - rectangle.Width * 2, (int)owner.POSRect.Y - rectangle.Height*1 / 4, rectangle.Width * 2, rectangle.Height*3/2);
                         //it puts the hitbox rectangle on the left side
-                        Position.X = player.POSRect.X + 5;//and the sprite position on the right of the player
-                            Position.Y = player.Position.Y;// and the y = to that of the player
-                            rotation -= (float)player.aSpeed/1000;// and begins rotating based on attackspeed
+                        Position.X = owner.POSRect.X + 5;//and the sprite position on the right of the player
+                            Position.Y = owner.Position.Y;// and the y = to that of the player
+                            rotation -= (float)100/1000;// and begins rotating based on attackspeed
                         swinged = true;//it also sets swinged to true
 
 
@@ -177,11 +232,11 @@ namespace Kuessaria
                     }
                 case swung.right:// if they swung right its the same but for the right side
                     {
-                        POSRect = new Rectangle((int)player.POSRect.X + rectangle.Width/2 + player.POSRect.Width/2, (int)player.POSRect.Y - rectangle.Height* 1 / 4, rectangle.Width * 2, rectangle.Height*3/2);
+                        POSRect = new Rectangle((int)owner.POSRect.X + rectangle.Width/2 + owner.POSRect.Width/2, (int)owner.POSRect.Y - rectangle.Height* 1 / 4, rectangle.Width * 2, rectangle.Height*3/2);
 
-                        Position.X = player.POSRect.X + player.Width - 5;
-                            Position.Y = player.Position.Y;
-                            rotation += (float)player.aSpeed / 1000;
+                        Position.X = owner.POSRect.X + owner.Width - 5;
+                            Position.Y = owner.Position.Y;
+                            rotation += (float)100 / 1000;
                         swinged = true;
                     }
                     break;
@@ -189,7 +244,7 @@ namespace Kuessaria
             }
         }
 
-        public void Draw(SpriteBatch spriteBatch, PlayerStats player)
+        public void Draw(SpriteBatch spriteBatch, EntitySprite player)
         {
 
             if (heal)// if they were healing it
@@ -215,7 +270,47 @@ namespace Kuessaria
                     }
             }
         }
-        
+        /// <summary>
+        /// Converts a MemoryStream to a byte array
+        /// </summary>
+        /// <param name="ms">MemoryStream to convert</param>
+        /// <returns>Byte array representation of the data</returns>
+        private byte[] GetDataFromMemoryStream(MemoryStream ms)
+        {
+            byte[] result;
+
+            //Async method called this, so lets lock the object to make sure other threads/async calls need to wait to use it.
+            lock (ms)
+            {
+                int bytesWritten = (int)ms.Position;
+                result = new byte[bytesWritten];
+
+                ms.Position = 0;
+                ms.Read(result, 0, bytesWritten);
+            }
+
+            return result;
+        }
+        /// <summary>
+        /// Code to actually send the data to the client
+        /// </summary>
+        /// <param name="b">Data to send</param>
+        public void SendData(byte[] b, TcpClient client)
+        {
+            //Try to send the data.  If an exception is thrown, disconnect the client
+            try
+            {
+                lock (client.GetStream())
+                {
+                    client.GetStream().BeginWrite(b, 0, b.Length, null, null);
+                }
+            }
+            catch (Exception e)
+            {
+                System.Windows.Forms.MessageBox.Show("Error sending message: " + e);
+            }
+        }
+
     }
 }
 
