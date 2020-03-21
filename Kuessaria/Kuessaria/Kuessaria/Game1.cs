@@ -294,6 +294,20 @@ namespace Kuessaria
                             System.Threading.Thread.Sleep(2000);
 
                             writeStream.Position = 0;
+                            writer.Write((byte)Protocol.MapJoined);
+                            writer.Write(Convert.ToInt32(Player.Position.X));
+                            writer.Write(Convert.ToInt32(Player.Position.Y));
+                            writer.Write(Player.mapName);
+                            writer.Write(Player.name);
+                            SendData(GetDataFromMemoryStream(writeStream));
+
+
+
+                            System.Threading.Thread.Sleep(2000);
+
+
+
+                            writeStream.Position = 0;
                             writer.Write((byte)Protocol.enemyLoad);
                             writer.Write(Player.mapName);
                             SendData(GetDataFromMemoryStream(writeStream));
@@ -318,6 +332,19 @@ namespace Kuessaria
                             client.GetStream().BeginRead(readBuffer, 0, BUFFER_SIZE, StreamReceived, null);
 
                             System.Threading.Thread.Sleep(2000);
+
+                            writeStream.Position = 0;
+                            writer.Write((byte)Protocol.MapJoined);
+                            writer.Write(Convert.ToInt32(Player.Position.X));
+                            writer.Write(Convert.ToInt32(Player.Position.Y));
+                            writer.Write(Player.mapName);
+                            writer.Write(Player.name);
+                            SendData(GetDataFromMemoryStream(writeStream));
+
+
+
+                            System.Threading.Thread.Sleep(2000);
+
 
                             writeStream.Position = 0;
                             writer.Write((byte)Protocol.enemyLoad);
@@ -349,6 +376,14 @@ namespace Kuessaria
                         EnemyList.Clear();
                         weapons.Clear();
                         CurrentGameState = GameState.MainMenu;//goes to the main menu
+                    }
+                    //Friendlies a
+                    lock (friendlyPlayers)
+                    {
+                        foreach (EntitySprite friendly in friendlyPlayers.Values)
+                        {
+                            friendly.Update(gameTime);
+                        }
                     }
                     //Collison
                     foreach (CollisionTiles tile in map.CollisionTiles)// checks for every tile in the maps list of tiles
@@ -407,15 +442,15 @@ namespace Kuessaria
                             slime.Value.Update(gameTime, map, Player, slime.Key, client);// update the slime
                             slime.Value.SlimeCollision(sword, Player, slime.Key,client);// and check if a sword is hitting it
                   
-                            if (slime.Key == 20 && slime.Value.health <= 0 && Player.quest2Status == 1)
+                            if (slime.Key == 20 && slime.Value.health <= 0 && Player.quest2Status == 1 )
                             {
                                 Player.quest2Progress++;                            
                             }
-                            else if (slime.Key < 10 && slime.Value.health <= 0 && Player.quest1Status == 1)
+                            else if (slime.Key < 10 && slime.Value.health <= 0 && Player.quest1Status == 1 )
                             {
                                 Player.quest1Progress++;
                             }
-                            else if (slime.Key > 10 && slime.Key < 20 && slime.Value.health <= 0 && Player.quest3Status == 1)
+                            else if (slime.Key > 10 && slime.Key < 20 && slime.Value.health <= 0 && Player.quest3Status == 1 )
                             {
                                 Player.quest3Progress++;
                             }
@@ -425,17 +460,22 @@ namespace Kuessaria
                     foreach(var quest in quests)
                     {
                         
-                        if (quest.Key == 21 && quest.Value.objectiveTarget == Player.quest2Progress && Player.quest2Status == 1)
+                        if (quest.Key == 21 && quest.Value.objectiveTarget >= Player.quest2Progress && Player.quest2Status == 1 )
                         {
                             Player.quest2Status = 2;
+                            Player.quest2Progress = quest.Value.objectiveTarget;
                         }
-                        if (quest.Key == 1 && quest.Value.objectiveTarget == Player.quest1Progress && Player.quest1Status == 1)
+                        if (quest.Key == 1 && quest.Value.objectiveTarget >= Player.quest1Progress && Player.quest1Status == 1 )
                         {
                             Player.quest1Status = 2;
+                            Player.quest1Progress = quest.Value.objectiveTarget;
+
                         }
-                        if (quest.Key == 2 && quest.Value.objectiveTarget == Player.quest3Progress && Player.quest3Status == 1)
+                        if (quest.Key == 2 && quest.Value.objectiveTarget >= Player.quest3Progress && Player.quest3Status == 1 )
                         {
                             Player.quest3Status = 2;
+                            Player.quest3Progress = quest.Value.objectiveTarget;
+
                         }
                     }
 
@@ -444,14 +484,7 @@ namespace Kuessaria
                     Player.Update(gameTime, Player, client, writer,writeStream);//updates the player sprite
                     sword.update(Mouse.GetState(), GraphicsDevice.Viewport, sword.owner, writer, writeStream, client);// updates the sword
 
-                    //Friendlies a
-                    lock (friendlyPlayers)
-                    {
-                        foreach (EntitySprite friendly in friendlyPlayers.Values)
-                        {
-                            friendly.Update(gameTime);
-                        }
-                    }
+
                     lock (NPCs)
                     {
                         foreach (EntitySprite npc in NPCs.Values)
@@ -748,14 +781,7 @@ namespace Kuessaria
                     byte id = reader.ReadByte();
                     string ip = reader.ReadString();
 
-                    writeStream.Position = 0;
-                    writer.Write((byte)Protocol.Load);
-                    writer.Write(Convert.ToInt32(Player.Position.X));
-                    writer.Write(Convert.ToInt32(Player.Position.Y));
-                    writer.Write(Player.mapName);
-                    writer.Write(Player.name);
-                    SendData(GetDataFromMemoryStream(writeStream));
-                    
+                    writeStream.Position = 0;                   
 
                 }
                 else if (p == Protocol.Disconnected)
@@ -764,8 +790,10 @@ namespace Kuessaria
                     string ip = reader.ReadString();
                     if(friendlyPlayers.ContainsKey(id))
                     {
- 
+                        lock (friendlyPlayers)
+                        {
                             friendlyPlayers.Remove(id);
+                        }
                         
                     }
                 }
@@ -779,18 +807,34 @@ namespace Kuessaria
                     byte id = reader.ReadByte();
                     string ip = reader.ReadString();
 
-                    if (map == Player.mapName)
+                    lock (friendlyPlayers)
                     {
-        
+                        if (map == Player.mapName && !friendlyPlayers.ContainsKey(id))
+                        {
+
                             friendlyPlayers.Add(id, new EntitySprite(Content.Load<Texture2D>("player2"), new Vector2(x, y), Width, Height, 8, name));
-                        
-                    }
-                    else if (friendlyPlayers.ContainsKey(id))
-                    {
-                  
+
+                            writeStream.Position = 0;
+                            writer.Write((byte)Protocol.MapJoined);
+                            writer.Write(Convert.ToInt32(Player.Position.X));
+                            writer.Write(Convert.ToInt32(Player.Position.Y));
+                            writer.Write(Player.mapName);
+                            writer.Write(Player.name);
+                            SendData(GetDataFromMemoryStream(writeStream));
+                        }
+                        else if (map != Player.mapName && friendlyPlayers.ContainsKey(id))
+                        {
+
                             friendlyPlayers.Remove(id);
-                        
+
+                        }
+                        else if (map == Player.mapName && friendlyPlayers.ContainsKey(id))
+                        {
+                            friendlyPlayers.Remove(id);
+                            friendlyPlayers.Add(id, new EntitySprite(Content.Load<Texture2D>("player2"), new Vector2(x, y), Width, Height, 8, name));
+                        }
                     }
+                    
                 }
                 else if (p == Protocol.Load)
                 {
@@ -802,11 +846,12 @@ namespace Kuessaria
                     byte id = reader.ReadByte();
                     string ip = reader.ReadString();
 
-                    if (map == Player.mapName)
+                    if (map == Player.mapName && !friendlyPlayers.ContainsKey(id))
                     {
-                 
-                        friendlyPlayers.Add(id, new EntitySprite(Content.Load<Texture2D>("player2"), new Vector2(x, y), Width, Height, 8, name));
-                        
+                        lock (friendlyPlayers)
+                        {
+                            friendlyPlayers.Add(id, new EntitySprite(Content.Load<Texture2D>("player2"), new Vector2(x, y), Width, Height, 8, name));
+                        }
                         writeStream.Position = 0;
                         writer.Write((byte)Protocol.MapJoined);
                         writer.Write(Convert.ToInt32(Player.Position.X));
@@ -814,6 +859,7 @@ namespace Kuessaria
                         writer.Write(Player.mapName);
                         writer.Write(Player.name);
                         SendData(GetDataFromMemoryStream(writeStream));
+                        
                     }
                 }
                 else if (p == Protocol.PlayerMoved)
@@ -827,8 +873,11 @@ namespace Kuessaria
 
                     if (friendlyPlayers.ContainsKey(id))
                     {
-                        friendlyPlayers[id].Position = new Vector2(posX, posY);                       
-                        friendlyPlayers[id].velocity = new Vector2(x, y);
+                        friendlyPlayers[id].Position.X = posX;
+                        friendlyPlayers[id].Position.Y = posY;  
+                        friendlyPlayers[id].velocity.Y = y;
+                        friendlyPlayers[id].velocity.X = x;
+                        
                     }
                 }
                 else if (p == Protocol.weaponCreated)
@@ -915,6 +964,18 @@ namespace Kuessaria
                         EnemyList[id].Position.Y = y;
                         EnemyList[id].action = act;
                         EnemyList[id].health = hp;
+                        if (id < 10 && Player.quest1Status == 1)
+                        {
+                            Player.quest1Progress++;
+                        }
+                        else if (id < 20 && Player.quest3Status == 1)
+                        {
+                            Player.quest3Progress++;
+                        }
+                        else if (id == 20 && Player.quest2Status == 1)
+                        {
+                            Player.quest2Progress++;
+                        }
                     }
 
                 }
@@ -974,7 +1035,6 @@ namespace Kuessaria
                     float y = reader.ReadSingle();
                     int width = reader.ReadInt32();
                     int height = reader.ReadInt32();
-                    System.Windows.Forms.MessageBox.Show("NPC " + id + " load command recieved. Map = " + map + ", player map = " + Player.mapName);
 
 
                     if (map == Player.mapName && !NPCs.ContainsKey(id))
@@ -994,7 +1054,18 @@ namespace Kuessaria
             }
             catch (Exception e)
             {
-                System.Windows.Forms.MessageBox.Show("Error:" + e.Message);
+            /*  lock (friendlyPlayers)
+                {
+                    friendlyPlayers.Clear();
+                }
+                writeStream.Position = 0;
+                writer.Write((byte)Protocol.MapJoined);
+                writer.Write(Convert.ToInt32(Player.Position.X));
+                writer.Write(Convert.ToInt32(Player.Position.Y));
+                writer.Write(Player.mapName);
+                writer.Write(Player.name);
+                SendData(GetDataFromMemoryStream(writeStream));
+                */
             }
         }
         /// <summary>

@@ -125,11 +125,23 @@ namespace Kuessaria
             {
                 velocity.Y = 20;
             }
+            if (velocity.Y < 0)
+            {
+                velocity.Y += 0.15f;
+            }
         }
 
         public void Draw(SpriteBatch spriteBatch, SpriteFont font)
         {
-            spriteBatch.Draw(texture, Position, rectangle, color, 0f, origin, 1.0f, SpriteEffects.None, 0);// this simply draws the sprite
+            if (hit)
+            {
+                spriteBatch.Draw(texture, Position, rectangle, Color.Red, 0f, origin, 1.0f, SpriteEffects.None, 0);// this simply draws the sprite
+            }
+            else
+            {
+                spriteBatch.Draw(texture, Position, rectangle, color, 0f, origin, 1.0f, SpriteEffects.None, 0);// this simply draws the sprite
+
+            }
             spriteBatch.DrawString(font, name, new Vector2(POSRect.X + 6, POSRect.Y - 14), Color.White);// this will always draw its health above its head
 
         }
@@ -140,6 +152,7 @@ namespace Kuessaria
             velocity.Y = -16f;//this makes the player move upward
             letgo = false;//this is sort of a pastkey type deal
             Jumped = true;//this makes sure the player cant jump again yet
+
 
         }
         public virtual void Move(GameTime gameTime, PlayerStats Stats, TcpClient client)//this determines the players movement
@@ -203,6 +216,13 @@ namespace Kuessaria
             {
                 velocity.Y += 5;//it adds 5 to the velocity, to slow them down because they let go of w
                 letgo = true;//sets letgo to true so this doesnt run again
+                writeStream.Position = 0;
+                writer.Write((byte)Protocol.PlayerMoved);
+                writer.Write(this.velocity.X);
+                writer.Write(this.velocity.Y);
+                writer.Write(Convert.ToInt32(this.Position.X));
+                writer.Write(Convert.ToInt32(this.Position.Y));
+                SendData(GetDataFromMemoryStream(writeStream), client);
             }
             if (velocity.Y >= 20)//this ensures they dont go past the terminal velocity of 20
             {
@@ -218,7 +238,7 @@ namespace Kuessaria
                 writer.Write(this.velocity.Y);
                 writer.Write(Convert.ToInt32(this.Position.X));
                 writer.Write(Convert.ToInt32(this.Position.Y));
-                SendData(GetDataFromMemoryStream(writeStream),client);
+                SendData(GetDataFromMemoryStream(writeStream), client);
             }
 
             if (velocity.Y < 20)//this is the constant of gravity that is added if they are not at terminal velocity
@@ -280,8 +300,10 @@ namespace Kuessaria
             if (Keyboard.GetState().IsKeyDown(Keys.W) && Jumped == false)//if they press w and havent jumped yet
                 Jump();//theyll jump
 
+
             if (velocity.Y < 20)//this is the constant of gravity that is added if they are not at terminal velocity
                 velocity.Y += 0.4f;
+            
 
         }
 

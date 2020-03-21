@@ -180,6 +180,19 @@ namespace ServerSide
                 handlers[mapname].SendMobMove(mobID);
 
             }
+            else if (command == (byte)7 || command == (byte)8)//enemy hit or died
+            {
+                int id = r.ReadInt32();
+                float x = r.ReadSingle();
+                float y = r.ReadSingle();
+                int act = r.ReadInt32();
+
+                handlers["World1"].mobs[id].posX = x;
+                handlers["World1"].mobs[id].posY = y;
+                handlers["World1"].mobs[id].action = act;
+
+
+            }
             writeStream.Position = 0;
 
             if (true)

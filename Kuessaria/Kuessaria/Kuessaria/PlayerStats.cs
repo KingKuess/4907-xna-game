@@ -135,7 +135,7 @@ namespace Kuessaria
                 MaxMana = 100;
                 Name = Filename;// and the name they selected
                 Strength = 10;
-                MSpeed = 5;
+                MSpeed = 9;
                 ASpeed = 100;
                 Intelligence = 10;
                 Experience = 0;
