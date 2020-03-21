@@ -7,17 +7,8 @@
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
       <Options>None</Options>
-      <Output>C:\Users\kyle9\Desktop\4907-xna-game\Kuessaria\Kuessaria\Kuessaria\bin\x86\Debug\Content\Backgrounds\Background.xnb</Output>
-      <Time>2016-06-09T14:23:34-04:00</Time>
-    </Item>
-    <Item>
-      <Source>Blocks\Dirt.png</Source>
-      <Name>Blocks\Dirt</Name>
-      <Importer>TextureImporter</Importer>
-      <Processor>TextureProcessor</Processor>
-      <Options>None</Options>
-      <Output>C:\Users\kyle9\Desktop\4907-xna-game\Kuessaria\Kuessaria\Kuessaria\bin\x86\Debug\Content\Blocks\Dirt.xnb</Output>
-      <Time>2016-06-09T20:54:46-04:00</Time>
+      <Output>C:\Users\kyle9\Desktop\fuck\4907-xna-game\Kuessaria\Kuessaria\Kuessaria\bin\x86\Debug\Content\Backgrounds\Background.xnb</Output>
+      <Time>2020-03-09T21:13:14.4468745-04:00</Time>
     </Item>
     <Item>
       <Source>player.png</Source>
@@ -25,8 +16,8 @@
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
       <Options>None</Options>
-      <Output>C:\Users\kyle9\Desktop\4907-xna-game\Kuessaria\Kuessaria\Kuessaria\bin\x86\Debug\Content\player.xnb</Output>
-      <Time>2019-06-21T17:27:06.5278215-04:00</Time>
+      <Output>C:\Users\kyle9\Desktop\fuck\4907-xna-game\Kuessaria\Kuessaria\Kuessaria\bin\x86\Debug\Content\player.xnb</Output>
+      <Time>2020-03-09T21:13:14.4959189-04:00</Time>
     </Item>
     <Item>
       <Source>Backgrounds\MainMenu.png</Source>
@@ -34,8 +25,8 @@
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
       <Options>None</Options>
-      <Output>C:\Users\kyle9\Desktop\4907-xna-game\Kuessaria\Kuessaria\Kuessaria\bin\x86\Debug\Content\Backgrounds\MainMenu.xnb</Output>
-      <Time>2020-03-08T23:21:32.1377256-04:00</Time>
+      <Output>C:\Users\kyle9\Desktop\fuck\4907-xna-game\Kuessaria\Kuessaria\Kuessaria\bin\x86\Debug\Content\Backgrounds\MainMenu.xnb</Output>
+      <Time>2020-03-09T21:13:14.4548818-04:00</Time>
     </Item>
     <Item>
       <Source>Buttons\Button1.png</Source>
@@ -43,8 +34,8 @@
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
       <Options>None</Options>
-      <Output>C:\Users\kyle9\Desktop\4907-xna-game\Kuessaria\Kuessaria\Kuessaria\bin\x86\Debug\Content\Buttons\Button1.xnb</Output>
-      <Time>2016-06-10T17:30:04-04:00</Time>
+      <Output>C:\Users\kyle9\Desktop\fuck\4907-xna-game\Kuessaria\Kuessaria\Kuessaria\bin\x86\Debug\Content\Buttons\Button1.xnb</Output>
+      <Time>2020-03-09T21:13:14.471898-04:00</Time>
     </Item>
     <Item>
       <Source>Blocks\Tile2.jpg</Source>
@@ -52,8 +43,8 @@
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
       <Options>None</Options>
-      <Output>C:\Users\kyle9\Desktop\4907-xna-game\Kuessaria\Kuessaria\Kuessaria\bin\x86\Debug\Content\Blocks\Tile2.xnb</Output>
-      <Time>2016-06-11T17:00:16-04:00</Time>
+      <Output>C:\Users\kyle9\Desktop\fuck\4907-xna-game\Kuessaria\Kuessaria\Kuessaria\bin\x86\Debug\Content\Blocks\Tile2.xnb</Output>
+      <Time>2020-03-09T21:13:14.4588853-04:00</Time>
     </Item>
     <Item>
       <Source>Blocks\Tile1.jpg</Source>
@@ -61,8 +52,8 @@
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
       <Options>None</Options>
-      <Output>C:\Users\kyle9\Desktop\4907-xna-game\Kuessaria\Kuessaria\Kuessaria\bin\x86\Debug\Content\Blocks\Tile1.xnb</Output>
-      <Time>2016-06-11T17:00:16-04:00</Time>
+      <Output>C:\Users\kyle9\Desktop\fuck\4907-xna-game\Kuessaria\Kuessaria\Kuessaria\bin\x86\Debug\Content\Blocks\Tile1.xnb</Output>
+      <Time>2020-03-09T21:13:14.4578847-04:00</Time>
     </Item>
     <Item>
       <Source>Blocks\Tile3.jpg</Source>
@@ -70,8 +61,8 @@
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
       <Options>None</Options>
-      <Output>C:\Users\kyle9\Desktop\4907-xna-game\Kuessaria\Kuessaria\Kuessaria\bin\x86\Debug\Content\Blocks\Tile3.xnb</Output>
-      <Time>2016-06-11T17:00:16-04:00</Time>
+      <Output>C:\Users\kyle9\Desktop\fuck\4907-xna-game\Kuessaria\Kuessaria\Kuessaria\bin\x86\Debug\Content\Blocks\Tile3.xnb</Output>
+      <Time>2020-03-09T21:13:14.459886-04:00</Time>
     </Item>
     <Item>
       <Source>Backgrounds\LoadMenu.png</Source>
@@ -79,8 +70,8 @@
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
       <Options>None</Options>
-      <Output>C:\Users\kyle9\Desktop\4907-xna-game\Kuessaria\Kuessaria\Kuessaria\bin\x86\Debug\Content\Backgrounds\LoadMenu.xnb</Output>
-      <Time>2016-06-17T00:06:48-04:00</Time>
+      <Output>C:\Users\kyle9\Desktop\fuck\4907-xna-game\Kuessaria\Kuessaria\Kuessaria\bin\x86\Debug\Content\Backgrounds\LoadMenu.xnb</Output>
+      <Time>2020-03-09T21:13:14.4508785-04:00</Time>
     </Item>
     <Item>
       <Source>slime.png</Source>
@@ -88,8 +79,8 @@
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
       <Options>None</Options>
-      <Output>C:\Users\kyle9\Desktop\4907-xna-game\Kuessaria\Kuessaria\Kuessaria\bin\x86\Debug\Content\slime.xnb</Output>
-      <Time>2016-06-24T00:00:14-04:00</Time>
+      <Output>C:\Users\kyle9\Desktop\fuck\4907-xna-game\Kuessaria\Kuessaria\Kuessaria\bin\x86\Debug\Content\slime.xnb</Output>
+      <Time>2020-03-09T21:13:14.4979215-04:00</Time>
     </Item>
     <Item>
       <Source>bat.png</Source>
@@ -97,8 +88,8 @@
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
       <Options>None</Options>
-      <Output>C:\Users\kyle9\Desktop\4907-xna-game\Kuessaria\Kuessaria\Kuessaria\bin\x86\Debug\Content\bat.xnb</Output>
-      <Time>2016-06-24T02:05:06-04:00</Time>
+      <Output>C:\Users\kyle9\Desktop\fuck\4907-xna-game\Kuessaria\Kuessaria\Kuessaria\bin\x86\Debug\Content\bat.xnb</Output>
+      <Time>2020-03-09T21:13:14.4829076-04:00</Time>
     </Item>
     <Item>
       <Source>slimeBoss.png</Source>
@@ -106,8 +97,8 @@
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
       <Options>None</Options>
-      <Output>C:\Users\kyle9\Desktop\4907-xna-game\Kuessaria\Kuessaria\Kuessaria\bin\x86\Debug\Content\slimeBoss.xnb</Output>
-      <Time>2016-06-24T12:11:26-04:00</Time>
+      <Output>C:\Users\kyle9\Desktop\fuck\4907-xna-game\Kuessaria\Kuessaria\Kuessaria\bin\x86\Debug\Content\slimeBoss.xnb</Output>
+      <Time>2020-03-09T21:13:14.4989226-04:00</Time>
     </Item>
     <Item>
       <Source>Sword.png</Source>
@@ -115,8 +106,8 @@
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
       <Options>None</Options>
-      <Output>C:\Users\kyle9\Desktop\4907-xna-game\Kuessaria\Kuessaria\Kuessaria\bin\x86\Debug\Content\Sword.xnb</Output>
-      <Time>2019-06-21T16:42:23.8146491-04:00</Time>
+      <Output>C:\Users\kyle9\Desktop\fuck\4907-xna-game\Kuessaria\Kuessaria\Kuessaria\bin\x86\Debug\Content\Sword.xnb</Output>
+      <Time>2020-03-09T21:13:14.4819076-04:00</Time>
     </Item>
     <Item>
       <Source>Buttons\Button2.png</Source>
@@ -124,8 +115,8 @@
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
       <Options>None</Options>
-      <Output>C:\Users\kyle9\Desktop\4907-xna-game\Kuessaria\Kuessaria\Kuessaria\bin\x86\Debug\Content\Buttons\Button2.xnb</Output>
-      <Time>2016-06-24T21:52:38-04:00</Time>
+      <Output>C:\Users\kyle9\Desktop\fuck\4907-xna-game\Kuessaria\Kuessaria\Kuessaria\bin\x86\Debug\Content\Buttons\Button2.xnb</Output>
+      <Time>2020-03-09T21:13:14.4728989-04:00</Time>
     </Item>
     <Item>
       <Source>Buttons\Button3.png</Source>
@@ -133,8 +124,8 @@
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
       <Options>None</Options>
-      <Output>C:\Users\kyle9\Desktop\4907-xna-game\Kuessaria\Kuessaria\Kuessaria\bin\x86\Debug\Content\Buttons\Button3.xnb</Output>
-      <Time>2016-06-24T21:52:38-04:00</Time>
+      <Output>C:\Users\kyle9\Desktop\fuck\4907-xna-game\Kuessaria\Kuessaria\Kuessaria\bin\x86\Debug\Content\Buttons\Button3.xnb</Output>
+      <Time>2020-03-09T21:13:14.4738995-04:00</Time>
     </Item>
     <Item>
       <Source>Backgrounds\Instructions.png</Source>
@@ -142,8 +133,8 @@
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
       <Options>None</Options>
-      <Output>C:\Users\kyle9\Desktop\4907-xna-game\Kuessaria\Kuessaria\Kuessaria\bin\x86\Debug\Content\Backgrounds\Instructions.xnb</Output>
-      <Time>2016-06-24T22:28:08-04:00</Time>
+      <Output>C:\Users\kyle9\Desktop\fuck\4907-xna-game\Kuessaria\Kuessaria\Kuessaria\bin\x86\Debug\Content\Backgrounds\Instructions.xnb</Output>
+      <Time>2020-03-09T21:13:14.4488779-04:00</Time>
     </Item>
     <Item>
       <Source>LevelUp.png</Source>
@@ -151,8 +142,8 @@
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
       <Options>None</Options>
-      <Output>C:\Users\kyle9\Desktop\4907-xna-game\Kuessaria\Kuessaria\Kuessaria\bin\x86\Debug\Content\LevelUp.xnb</Output>
-      <Time>2016-12-22T15:55:56-05:00</Time>
+      <Output>C:\Users\kyle9\Desktop\fuck\4907-xna-game\Kuessaria\Kuessaria\Kuessaria\bin\x86\Debug\Content\LevelUp.xnb</Output>
+      <Time>2020-03-09T21:13:14.475901-04:00</Time>
     </Item>
     <Item>
       <Source>Stats.png</Source>
@@ -160,8 +151,8 @@
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
       <Options>None</Options>
-      <Output>C:\Users\kyle9\Desktop\4907-xna-game\Kuessaria\Kuessaria\Kuessaria\bin\x86\Debug\Content\Stats.xnb</Output>
-      <Time>2016-12-22T15:55:04-05:00</Time>
+      <Output>C:\Users\kyle9\Desktop\fuck\4907-xna-game\Kuessaria\Kuessaria\Kuessaria\bin\x86\Debug\Content\Stats.xnb</Output>
+      <Time>2020-03-09T21:13:14.4809058-04:00</Time>
     </Item>
     <Item>
       <Source>StatsExtended.png</Source>
@@ -169,35 +160,8 @@
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
       <Options>None</Options>
-      <Output>C:\Users\kyle9\Desktop\4907-xna-game\Kuessaria\Kuessaria\Kuessaria\bin\x86\Debug\Content\StatsExtended.xnb</Output>
-      <Time>2016-12-22T15:55:26-05:00</Time>
-    </Item>
-    <Item>
-      <Source>Load.spritefont</Source>
-      <Name>Load</Name>
-      <Importer>FontDescriptionImporter</Importer>
-      <Processor>FontDescriptionProcessor</Processor>
-      <Options>None</Options>
-      <Output>C:\Users\kyle9\Desktop\4907-xna-game\Kuessaria\Kuessaria\Kuessaria\bin\x86\Debug\Content\Load.xnb</Output>
-      <Time>2016-06-17T01:31:24-04:00</Time>
-    </Item>
-    <Item>
-      <Source>PlayerName.spritefont</Source>
-      <Name>PlayerName</Name>
-      <Importer>FontDescriptionImporter</Importer>
-      <Processor>FontDescriptionProcessor</Processor>
-      <Options>None</Options>
-      <Output>C:\Users\kyle9\Desktop\4907-xna-game\Kuessaria\Kuessaria\Kuessaria\bin\x86\Debug\Content\PlayerName.xnb</Output>
-      <Time>2016-06-17T03:21:36-04:00</Time>
-    </Item>
-    <Item>
-      <Source>NPC1.png</Source>
-      <Name>NPC1</Name>
-      <Importer>TextureImporter</Importer>
-      <Processor>TextureProcessor</Processor>
-      <Options>None</Options>
-      <Output>C:\Users\kyle9\Desktop\4907-xna-game\Kuessaria\Kuessaria\Kuessaria\bin\x86\Debug\Content\NPC1.xnb</Output>
-      <Time>2020-03-08T23:00:42.296597-04:00</Time>
+      <Output>C:\Users\kyle9\Desktop\fuck\4907-xna-game\Kuessaria\Kuessaria\Kuessaria\bin\x86\Debug\Content\StatsExtended.xnb</Output>
+      <Time>2020-03-09T21:13:14.4809058-04:00</Time>
     </Item>
     <Item>
       <Source>player2.png</Source>
@@ -205,8 +169,8 @@
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
       <Options>None</Options>
-      <Output>C:\Users\kyle9\Desktop\4907-xna-game\Kuessaria\Kuessaria\Kuessaria\bin\x86\Debug\Content\player2.xnb</Output>
-      <Time>2020-03-08T22:38:14.0472822-04:00</Time>
+      <Output>C:\Users\kyle9\Desktop\fuck\4907-xna-game\Kuessaria\Kuessaria\Kuessaria\bin\x86\Debug\Content\player2.xnb</Output>
+      <Time>2020-03-09T21:13:14.4969206-04:00</Time>
     </Item>
     <Item>
       <Source>zombie.png</Source>
@@ -214,8 +178,179 @@
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
       <Options>None</Options>
-      <Output>C:\Users\kyle9\Desktop\4907-xna-game\Kuessaria\Kuessaria\Kuessaria\bin\x86\Debug\Content\zombie.xnb</Output>
-      <Time>2020-03-09T20:29:38.8282497-04:00</Time>
+      <Output>C:\Users\kyle9\Desktop\fuck\4907-xna-game\Kuessaria\Kuessaria\Kuessaria\bin\x86\Debug\Content\zombie.xnb</Output>
+      <Time>2020-03-09T21:13:14.5009238-04:00</Time>
+    </Item>
+    <Item>
+      <Source>Load.spritefont</Source>
+      <Name>Load</Name>
+      <Importer>FontDescriptionImporter</Importer>
+      <Processor>FontDescriptionProcessor</Processor>
+      <Options>None</Options>
+      <Output>C:\Users\kyle9\Desktop\fuck\4907-xna-game\Kuessaria\Kuessaria\Kuessaria\bin\x86\Debug\Content\Load.xnb</Output>
+      <Time>2020-03-09T21:13:14.4769023-04:00</Time>
+    </Item>
+    <Item>
+      <Source>PlayerName.spritefont</Source>
+      <Name>PlayerName</Name>
+      <Importer>FontDescriptionImporter</Importer>
+      <Processor>FontDescriptionProcessor</Processor>
+      <Options>None</Options>
+      <Output>C:\Users\kyle9\Desktop\fuck\4907-xna-game\Kuessaria\Kuessaria\Kuessaria\bin\x86\Debug\Content\PlayerName.xnb</Output>
+      <Time>2020-03-09T21:13:14.4799048-04:00</Time>
+    </Item>
+    <Item>
+      <Source>Dialog.png</Source>
+      <Name>Dialog</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+      <Options>None</Options>
+      <Output>C:\Users\kyle9\Desktop\fuck\4907-xna-game\Kuessaria\Kuessaria\Kuessaria\bin\x86\Debug\Content\Dialog.xnb</Output>
+      <Time>2020-03-20T10:36:09.1412241-04:00</Time>
+    </Item>
+    <Item>
+      <Source>Franks.png</Source>
+      <Name>Franks</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+      <Options>None</Options>
+      <Output>C:\Users\kyle9\Desktop\fuck\4907-xna-game\Kuessaria\Kuessaria\Kuessaria\bin\x86\Debug\Content\Franks.xnb</Output>
+      <Time>2020-03-19T21:55:24.3468683-04:00</Time>
+    </Item>
+    <Item>
+      <Source>Registrar.png</Source>
+      <Name>Registrar</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+      <Options>None</Options>
+      <Output>C:\Users\kyle9\Desktop\fuck\4907-xna-game\Kuessaria\Kuessaria\Kuessaria\bin\x86\Debug\Content\Registrar.xnb</Output>
+      <Time>2020-03-09T21:13:14.4789035-04:00</Time>
+    </Item>
+    <Item>
+      <Source>hoodedMan.png</Source>
+      <Name>hoodedMan</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+      <Options>None</Options>
+      <Output>C:\Users\kyle9\Desktop\fuck\4907-xna-game\Kuessaria\Kuessaria\Kuessaria\bin\x86\Debug\Content\hoodedMan.xnb</Output>
+      <Time>2020-03-19T22:05:28.4786743-04:00</Time>
+    </Item>
+    <Item>
+      <Source>Buttons\close.png</Source>
+      <Name>Buttons\close</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+      <Options>None</Options>
+      <Output>C:\Users\kyle9\Desktop\fuck\4907-xna-game\Kuessaria\Kuessaria\Kuessaria\bin\x86\Debug\Content\Buttons\close.xnb</Output>
+      <Time>2020-03-19T22:38:24.944209-04:00</Time>
+    </Item>
+    <Item>
+      <Source>Buttons\ok.png</Source>
+      <Name>Buttons\ok</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+      <Options>None</Options>
+      <Output>C:\Users\kyle9\Desktop\fuck\4907-xna-game\Kuessaria\Kuessaria\Kuessaria\bin\x86\Debug\Content\Buttons\ok.xnb</Output>
+      <Time>2020-03-19T22:37:33.9124863-04:00</Time>
+    </Item>
+    <Item>
+      <Source>Blocks\Tile4.jpg</Source>
+      <Name>Blocks\Tile4</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+      <Options>None</Options>
+      <Output>C:\Users\kyle9\Desktop\fuck\4907-xna-game\Kuessaria\Kuessaria\Kuessaria\bin\x86\Debug\Content\Blocks\Tile4.xnb</Output>
+      <Time>2020-03-20T00:55:12.0021411-04:00</Time>
+    </Item>
+    <Item>
+      <Source>Blocks\Tile5.jpg</Source>
+      <Name>Blocks\Tile5</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+      <Options>None</Options>
+      <Output>C:\Users\kyle9\Desktop\fuck\4907-xna-game\Kuessaria\Kuessaria\Kuessaria\bin\x86\Debug\Content\Blocks\Tile5.xnb</Output>
+      <Time>2020-03-20T00:57:06.6684512-04:00</Time>
+    </Item>
+    <Item>
+      <Source>Blocks\Tile6.jpg</Source>
+      <Name>Blocks\Tile6</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+      <Options>None</Options>
+      <Output>C:\Users\kyle9\Desktop\fuck\4907-xna-game\Kuessaria\Kuessaria\Kuessaria\bin\x86\Debug\Content\Blocks\Tile6.xnb</Output>
+      <Time>2020-03-20T00:41:27.5648005-04:00</Time>
+    </Item>
+    <Item>
+      <Source>Blocks\Tile7.jpg</Source>
+      <Name>Blocks\Tile7</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+      <Options>None</Options>
+      <Output>C:\Users\kyle9\Desktop\fuck\4907-xna-game\Kuessaria\Kuessaria\Kuessaria\bin\x86\Debug\Content\Blocks\Tile7.xnb</Output>
+      <Time>2020-03-20T00:57:21.3368854-04:00</Time>
+    </Item>
+    <Item>
+      <Source>Blocks\Tile8.jpg</Source>
+      <Name>Blocks\Tile8</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+      <Options>None</Options>
+      <Output>C:\Users\kyle9\Desktop\fuck\4907-xna-game\Kuessaria\Kuessaria\Kuessaria\bin\x86\Debug\Content\Blocks\Tile8.xnb</Output>
+      <Time>2020-03-20T00:42:12.2161217-04:00</Time>
+    </Item>
+    <Item>
+      <Source>Blocks\TileB.jpg</Source>
+      <Name>Blocks\TileB</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+      <Options>None</Options>
+      <Output>C:\Users\kyle9\Desktop\fuck\4907-xna-game\Kuessaria\Kuessaria\Kuessaria\bin\x86\Debug\Content\Blocks\TileB.xnb</Output>
+      <Time>2020-03-20T00:58:52.1715184-04:00</Time>
+    </Item>
+    <Item>
+      <Source>Blocks\TileD.jpg</Source>
+      <Name>Blocks\TileD</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+      <Options>None</Options>
+      <Output>C:\Users\kyle9\Desktop\fuck\4907-xna-game\Kuessaria\Kuessaria\Kuessaria\bin\x86\Debug\Content\Blocks\TileD.xnb</Output>
+      <Time>2020-03-09T21:13:14.4678933-04:00</Time>
+    </Item>
+    <Item>
+      <Source>Blocks\TileT.jpg</Source>
+      <Name>Blocks\TileT</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+      <Options>None</Options>
+      <Output>C:\Users\kyle9\Desktop\fuck\4907-xna-game\Kuessaria\Kuessaria\Kuessaria\bin\x86\Debug\Content\Blocks\TileT.xnb</Output>
+      <Time>2020-03-20T00:59:29.5751771-04:00</Time>
+    </Item>
+    <Item>
+      <Source>barBack.png</Source>
+      <Name>barBack</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+      <Options>None</Options>
+      <Output>C:\Users\kyle9\Desktop\fuck\4907-xna-game\Kuessaria\Kuessaria\Kuessaria\bin\x86\Debug\Content\barBack.xnb</Output>
+      <Time>2020-03-20T01:35:50.2837983-04:00</Time>
+    </Item>
+    <Item>
+      <Source>hpBar.png</Source>
+      <Name>hpBar</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+      <Options>None</Options>
+      <Output>C:\Users\kyle9\Desktop\fuck\4907-xna-game\Kuessaria\Kuessaria\Kuessaria\bin\x86\Debug\Content\hpBar.xnb</Output>
+      <Time>2020-03-20T01:35:17.2040538-04:00</Time>
+    </Item>
+    <Item>
+      <Source>manaBar.png</Source>
+      <Name>manaBar</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+      <Options>None</Options>
+      <Output>C:\Users\kyle9\Desktop\fuck\4907-xna-game\Kuessaria\Kuessaria\Kuessaria\bin\x86\Debug\Content\manaBar.xnb</Output>
+      <Time>2020-03-20T01:35:31.8547314-04:00</Time>
     </Item>
     <BuildSuccessful>true</BuildSuccessful>
     <Settings>
@@ -224,10 +359,10 @@
       <TargetProfile>Reach</TargetProfile>
       <BuildConfiguration>Debug</BuildConfiguration>
       <CompressContent>false</CompressContent>
-      <RootDirectory>C:\Users\kyle9\Desktop\4907-xna-game\Kuessaria\Kuessaria\KuessariaContent\</RootDirectory>
-      <LoggerRootDirectory>C:\Users\kyle9\Desktop\4907-xna-game\Kuessaria\Kuessaria\Kuessaria\</LoggerRootDirectory>
-      <IntermediateDirectory>C:\Users\kyle9\Desktop\4907-xna-game\Kuessaria\Kuessaria\Kuessaria\obj\x86\Debug\</IntermediateDirectory>
-      <OutputDirectory>C:\Users\kyle9\Desktop\4907-xna-game\Kuessaria\Kuessaria\Kuessaria\bin\x86\Debug\Content\</OutputDirectory>
+      <RootDirectory>C:\Users\kyle9\Desktop\fuck\4907-xna-game\Kuessaria\Kuessaria\KuessariaContent\</RootDirectory>
+      <LoggerRootDirectory>C:\Users\kyle9\Desktop\fuck\4907-xna-game\Kuessaria\Kuessaria\Kuessaria\</LoggerRootDirectory>
+      <IntermediateDirectory>C:\Users\kyle9\Desktop\fuck\4907-xna-game\Kuessaria\Kuessaria\Kuessaria\obj\x86\Debug\</IntermediateDirectory>
+      <OutputDirectory>C:\Users\kyle9\Desktop\fuck\4907-xna-game\Kuessaria\Kuessaria\Kuessaria\bin\x86\Debug\Content\</OutputDirectory>
     </Settings>
     <Assemblies>
       <Assembly>

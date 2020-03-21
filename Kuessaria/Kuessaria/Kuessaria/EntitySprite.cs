@@ -24,6 +24,8 @@ namespace Kuessaria
          protected float animtimer;//this is a float that holds a value for how long the frame has been on for
          protected int interval = 50;// tthis is an interval that it will wait to goto the next frame
         public float hitTimer = 0;// this is a timer that determines if an object is ready to get hit again
+        public string name;
+        public Color color = Color.White;
         
         public int Frames;//this is the total number of frames
         public EntitySprite()
@@ -31,7 +33,7 @@ namespace Kuessaria
 
         }
 
-        public EntitySprite(Texture2D newTexture, Vector2 newPosition, int newWidth, int newHeight, int frames)// this constructor creates the object using the values it takes in
+        public EntitySprite(Texture2D newTexture, Vector2 newPosition, int newWidth, int newHeight, int frames, string Name)// this constructor creates the object using the values it takes in
         {
             Frames = frames;
             texture = newTexture;
@@ -39,6 +41,7 @@ namespace Kuessaria
             Height = newHeight;
             Position = newPosition;
             rectangle = new Rectangle((int)newPosition.X, (int)newPosition.Y, Width, Height);
+            name = Name;
             
         }
         public virtual void Update(GameTime gameTime, PlayerStats stats, TcpClient client, BinaryWriter writer, MemoryStream writeStream)//this is the update method that runs constantly
@@ -124,10 +127,11 @@ namespace Kuessaria
             }
         }
 
-        public override void Draw(SpriteBatch spriteBatch)
+        public void Draw(SpriteBatch spriteBatch, SpriteFont font)
         {
-            spriteBatch.Draw(texture, Position, rectangle, Color.White, 0f, origin, 1.0f, SpriteEffects.None, 0);// this simply draws the sprite
-            
+            spriteBatch.Draw(texture, Position, rectangle, color, 0f, origin, 1.0f, SpriteEffects.None, 0);// this simply draws the sprite
+            spriteBatch.DrawString(font, name, new Vector2(POSRect.X + 6, POSRect.Y - 14), Color.White);// this will always draw its health above its head
+
         }
         //Movement Methods
         public virtual void Jump()//this is for jumping
@@ -306,6 +310,30 @@ namespace Kuessaria
             }
 
         }
+        bool down;//a boolean for checking if the button colors are going down or up
+        public bool interacted;
+        public void CollisionPlayer(PlayerStats player, bool interact)//This method checks collision between the enemy and the player
+        {
+
+
+            if (POSRect.Intersects(player.POSRect))// if the Position rectangle of the npc touches the player
+            {
+         
+                    if (color.A == 255) down = false;//this makes colors go down if they are at the top of 255
+                    if (color.A == 0) down = true;// this makes colors go up if they are at the bottom, 0
+                    if (down) color.A += 3; else color.A -= 3;
+                    if (interact) interacted = true;// if it gets clicked, it sets the boolean to true
+                
+               
+            }
+            else if (color.A < 255)//if the color is less than 255
+            {
+                color.A += 3;// it adds 3 to color
+                interacted = false;// and sets clicked to false
+
+            }
+
+        }
         //Collision Method
         public virtual void CollisionTile(Rectangle newRectangle, int xOffset, int yOffset)//this checks if the player is colliding with the blocks
         {
@@ -345,7 +373,7 @@ namespace Kuessaria
         /// </summary>
         /// <param name="ms">MemoryStream to convert</param>
         /// <returns>Byte array representation of the data</returns>
-        private byte[] GetDataFromMemoryStream(MemoryStream ms)
+        public byte[] GetDataFromMemoryStream(MemoryStream ms)
         {
             byte[] result;
 

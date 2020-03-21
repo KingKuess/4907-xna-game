@@ -10,6 +10,7 @@ namespace ServerSide
     {
         //Encapsulated 
         private TcpClient client;
+        public string mapName;
 
         //Byte array that is populated when a user receives data
         private byte[] readBuffer;
@@ -61,6 +62,7 @@ namespace ServerSide
 
             StartListening();
             connected = true;
+            mapName = "";
         }
 
         /// <summary>

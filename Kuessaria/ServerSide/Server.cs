@@ -18,12 +18,16 @@ namespace ServerSide
         {
             get { return listener; }
         }
+        //List of NPCHandlers
+        public Dictionary<string, NPCHandler> handlers = new Dictionary<string, NPCHandler>();
+
+
 
         //Array of clients
         Client[] client;
 
         //number of connected clients
-        int connectedClients = 0;
+        public int connectedClients = 0;
 
         //Writers and readers to manipulate data
         MemoryStream readStream;
@@ -54,6 +58,28 @@ namespace ServerSide
 
             //Set the singleton to the current object
             Server.singleton = this;
+        }
+
+        internal void askForSync(string map, int mobId)
+        {
+
+            foreach (Client c in client)
+            {
+                if (c != null)
+                {
+                    if (c.mapName == map)
+                    {
+
+                        MemoryStream writeStream = new MemoryStream();
+                        BinaryWriter writer = new BinaryWriter(writeStream);
+
+                        writeStream.Position = 0;
+                        writer.Write((byte)12);
+                        writer.Write(Convert.ToInt32(mobId));
+                        SendDataToClient(GetDataFromMemoryStream(writeStream), c);
+                    }
+                }
+            }
         }
 
         /// <summary>
@@ -110,9 +136,11 @@ namespace ServerSide
 
                 SendData(GetDataFromMemoryStream(writeStream), user);
             }
-
+            
             //Print the removed player message to the server window.
             Console.WriteLine(user.ToString() + " disconnected\tConnected Clients:  " + connectedClients + "\n");
+
+            
 
             //Clear the array's index
             client[user.id] = null;
@@ -125,6 +153,33 @@ namespace ServerSide
         /// <param name="data">The data to relay</param>
         private void user_DataReceived(Client sender, byte[] data)
         {
+            bool relay = true;
+            MemoryStream rstream = new MemoryStream(data);
+            BinaryReader r = new BinaryReader(rstream);
+            rstream.Position = 0;
+            byte command = r.ReadByte();
+            if (command == (byte)10)
+            {
+              
+                relay = false;
+                string mapname = r.ReadString();
+                Console.WriteLine("enemy load command recieved for map: " + mapname);
+                sender.mapName = mapname;
+                handlers[mapname].active = true;
+                sendMobLoad(sender, handlers[mapname].mobs, handlers[mapname].friendlies, mapname);
+            }
+            else if (command == (byte)12)
+            {
+                relay = false;
+                string mapname = r.ReadString();
+                int mobID = r.ReadInt32();
+                float X = r.ReadSingle();
+                float Y = r.ReadSingle();
+                handlers[mapname].mobs[mobID].posX = X;
+                handlers[mapname].mobs[mobID].posY = Y;
+                handlers[mapname].SendMobMove(mobID);
+
+            }
             writeStream.Position = 0;
 
             if (true)
@@ -136,11 +191,7 @@ namespace ServerSide
             }
 
             //If we want the original sender to receive the same message it sent, we call a different method
-            if (false)
-            {
-                SendData(data);
-            }
-            else
+            if (relay)
             {
                 SendData(data, sender);
             }
@@ -209,18 +260,17 @@ namespace ServerSide
             {
                 if (c != null && c != sender)
                 {
-                    if (data[0] == 4)
-                    {
-                        Console.WriteLine("Player " + sender.id + " moved");
-                        foreach (byte b in data)
-                        {
-                            Console.Write(b + ", ");
-                        }
-                        Console.WriteLine();
-                    }
+             
                     c.SendData(data);
                 }
             }
+
+            //Reset the writestream's position
+            writeStream.Position = 0;
+        }
+        public void SendDataToClient(byte[] data, Client recipient)
+        {
+            recipient.SendData(data);
 
             //Reset the writestream's position
             writeStream.Position = 0;
@@ -241,6 +291,47 @@ namespace ServerSide
 
             //Reset the writestream's position
             writeStream.Position = 0;
+        }
+        public void sendMobLoad(Client recipient, Dictionary<int, NPC> mobs, Dictionary<int, NPC> NPCs, string map)
+        {
+            foreach (var mob in NPCs)
+            {
+                mob.Value.writeStream.Position = 0;
+                mob.Value.writer.Write((byte)13);
+                mob.Value.writer.Write(map);
+                mob.Value.writer.Write(Convert.ToInt32(mob.Key));
+                mob.Value.writer.Write(mob.Value.texture);
+                mob.Value.writer.Write(mob.Value.posX);
+                mob.Value.writer.Write(mob.Value.posY);
+                mob.Value.writer.Write(Convert.ToInt32(mob.Value.width));
+                mob.Value.writer.Write(Convert.ToInt32(mob.Value.height));
+                SendDataToClient(GetDataFromMemoryStream(mob.Value.writeStream), recipient);
+                Console.WriteLine("Sent NPC: " + mob.Key +" at " + mob.Value.posX + ", " + mob.Value.posY );
+                System.Threading.Thread.Sleep(100);
+            }
+            foreach (var mob in mobs)
+            {
+                mob.Value.writeStream.Position = 0;
+                mob.Value.writer.Write((byte)10);
+                mob.Value.writer.Write(map);
+                mob.Value.writer.Write(Convert.ToInt32(mob.Key));
+                mob.Value.writer.Write(mob.Value.texture);
+                mob.Value.writer.Write(Convert.ToInt32(mob.Value.health));
+                mob.Value.writer.Write(Convert.ToInt32(mob.Value.strength));
+                mob.Value.writer.Write(mob.Value.posX);
+                mob.Value.writer.Write(mob.Value.posY);
+                mob.Value.writer.Write(Convert.ToInt32(mob.Value.width));
+                mob.Value.writer.Write(Convert.ToInt32(mob.Value.height));
+                mob.Value.writer.Write(Convert.ToInt32(mob.Value.frames));
+                mob.Value.writer.Write(Convert.ToInt32(mob.Value.spawntime));
+                mob.Value.writer.Write(mob.Value.isPassive);
+                mob.Value.writer.Write(Convert.ToInt32(mob.Value.action));
+                SendDataToClient(GetDataFromMemoryStream(mob.Value.writeStream), recipient);
+                Console.WriteLine("Sent Mob: " + mob.Key + " at " + mob.Value.posX + ", " + mob.Value.posY);
+                System.Threading.Thread.Sleep(100);
+               
+            }
+  
         }
     }
 }

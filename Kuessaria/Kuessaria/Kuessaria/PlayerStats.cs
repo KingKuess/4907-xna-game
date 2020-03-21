@@ -93,12 +93,21 @@ namespace Kuessaria
         }
         private int MaxMana;
 
+        public string mapName;
 
         public int maxMana
         {
             get { return MaxMana; }
             set { MaxMana += value; }
         }
+        public int quest1Status;
+        public int quest1Progress;
+        public int quest2Status;
+        public int quest2Progress;
+        public int quest3Status;
+        public int quest3Progress;
+
+
         enum QuickState//this is the state of the menu in the top left
         {
             MenuOn,
@@ -131,13 +140,14 @@ namespace Kuessaria
                 Intelligence = 10;
                 Experience = 0;
                 level = 1;
-
+                mapName = "Town";
 
                 texture = newTexture;
                 Width = newWidth;
                 Height = newHeight;
                 Position = new Vector2(250, 0);
                 rectangle = new Rectangle((int)Position.X, (int)Position.Y, Width, Height);
+                
                 try//it then trys to save the character
                 {
                     if (Filename != "Invalid")//if the character name isnt invalid
@@ -161,18 +171,29 @@ namespace Kuessaria
             Intelligence = int.Parse(stats[8]);
             Experience = int.Parse(stats[9]);
             level = int.Parse(stats[10]);
+            
 
             texture = newTexture;
             Width = newWidth;
             Height = newHeight;
             Position = new Vector2(int.Parse(stats[11]), int.Parse(stats[12]));
             rectangle = new Rectangle((int)Position.X, (int)Position.Y, Width, Height);
+
+            quest1Status = int.Parse(stats[13]);
+            quest1Progress = int.Parse(stats[14]);
+            quest2Status = int.Parse(stats[15]);
+            quest2Progress = int.Parse(stats[16]);
+            quest3Status = int.Parse(stats[17]);
+            quest3Progress = int.Parse(stats[18]);
+            mapName = stats[19];
+
+
             Typed = Filename;
             
         }
 
 
-        public PlayerStats(Texture2D texture2D, int width, int height, int frames)// this creates the character when they didnt input a value
+        public PlayerStats(Texture2D texture2D, int width, int height, int frames, string mapName)// this creates the character when they didnt input a value
         {
             Health = 100;// it sets all the values to their defaults
             maxHealth = 100;
@@ -197,12 +218,12 @@ namespace Kuessaria
             Position = new Vector2(250, 0);
             rectangle = new Rectangle((int)Position.X, (int)Position.Y, Width, Height);
 
-            
+            this.mapName = mapName;
         }
 
         public void SaveCharacter()// the save character function is how all the stats are saved to the file
         {
-            string[] stats = new string[13];
+            string[] stats = new string[20];
             stats[0] = Name;
             stats[1] = Health.ToString();
             stats[2] = MaxHealth.ToString();
@@ -217,6 +238,14 @@ namespace Kuessaria
 
             stats[11] = POSRect.X.ToString();
             stats[12] = POSRect.Y.ToString();
+
+            stats[13] = quest1Status.ToString();
+            stats[14] = quest1Progress.ToString();
+            stats[15] = quest2Status.ToString();
+            stats[16] = quest2Progress.ToString();
+            stats[17] = quest3Status.ToString();
+            stats[18] = quest3Progress.ToString();
+            stats[19] = mapName;
             // it sets the string array to all the stats
 
             System.IO.File.WriteAllLines("Saves/" + Name + ".txt", stats);// then saves it as a .txt in the saves folder
@@ -293,7 +322,7 @@ namespace Kuessaria
             }
         }
 
-        public void DrawStatsDisplay(SpriteBatch spriteBatch, SpriteFont font, Viewport Viewport, KeyboardState keyboard, Texture2D Menu1, Texture2D Menu2, Texture2D Menu3, Vector2 centre, Rectangle rectangle)// this draws the stat board
+        public void DrawStatsDisplay(SpriteBatch spriteBatch, SpriteFont font, Viewport Viewport, KeyboardState keyboard, Texture2D Menu1, Texture2D Menu2, Texture2D Menu3, Vector2 centre, Rectangle rectangle, Texture2D hpBar,  Texture2D manaBar, Texture2D barBack)// this draws the stat board
         {
             switch (CurrentQuickState)//this switch determines whether to draw all the stats or just health and mana
             {
@@ -302,8 +331,12 @@ namespace Kuessaria
                     spriteBatch.Draw(Menu1, new Vector2(centre.X - rectangle.Width / 2 + 160, centre.Y - rectangle.Height * 2 / 3 + 120), Color.White);
 
                     spriteBatch.DrawString(font, Name, new Vector2(centre.X - rectangle.Width / 2 + 160, (centre.Y - rectangle.Height * 2 / 3 + 120)), Color.Orange);
+                    spriteBatch.Draw(barBack, new Vector2((int)(centre.X - rectangle.Width / 2 + 240), (int)(centre.Y - rectangle.Height * 2 / 3 + 126) + 15), Color.White);
+                    spriteBatch.Draw(hpBar, new Rectangle((int)(centre.X - rectangle.Width / 2 + 240), (int)(centre.Y - rectangle.Height * 2 / 3 + 126) + 15, (int)((float)Health / (float)MaxHealth * 165), 15), Color.White);
                     spriteBatch.DrawString(font,"Health: "+ Health + "/" + MaxHealth, new Vector2(centre.X - rectangle.Width / 2 + 160, (centre.Y - rectangle.Height * 2 / 3 + 120) + 15), Color.Orange);
-                    spriteBatch.DrawString(font,"Mana: " + Mana + "/" + MaxMana, new Vector2(centre.X - rectangle.Width / 2 + 160, (centre.Y - rectangle.Height * 2 / 3 + 120)+ 15*2), Color.Orange);
+                    spriteBatch.Draw(barBack, new Vector2((int)(centre.X - rectangle.Width / 2 + 240), (int)(centre.Y - rectangle.Height * 2 / 3 + 126) + 15*2), Color.White);
+                    spriteBatch.Draw(manaBar, new Rectangle((int)(centre.X - rectangle.Width / 2 + 240), (int)(centre.Y - rectangle.Height * 2 / 3 + 126) + 15*2, (int)((float)Mana / (float)MaxMana * 165), 15), Color.White);
+                    spriteBatch.DrawString(font,"Mana:   " + Mana + "/" + MaxMana, new Vector2(centre.X - rectangle.Width / 2 + 160, (centre.Y - rectangle.Height * 2 / 3 + 120)+ 15*2), Color.Orange);
                     if (keyboard.IsKeyDown(Keys.LeftShift))// if they press shift
                         CurrentQuickState = QuickState.MenuOn;// it switches it into the menu on state
                     break;
@@ -311,8 +344,12 @@ namespace Kuessaria
                     spriteBatch.Draw(Menu2, new Vector2(centre.X - rectangle.Width / 2 + 160, centre.Y - rectangle.Height * 2 / 3 + 120), Color.White);
 
                     spriteBatch.DrawString(font, Name, new Vector2(centre.X - rectangle.Width / 2 + 160, centre.Y - rectangle.Height * 2 / 3 + 120), Color.Orange);
+                    spriteBatch.Draw(barBack, new Vector2((int)(centre.X - rectangle.Width / 2 + 240), (int)(centre.Y - rectangle.Height * 2 / 3 + 126) + 15), Color.White);
+                    spriteBatch.Draw(hpBar, new Rectangle((int)(centre.X - rectangle.Width / 2 + 240), (int)(centre.Y - rectangle.Height * 2 / 3 + 126) + 15, (int)((float)Health / (float)MaxHealth * 165), 15), Color.White);
                     spriteBatch.DrawString(font, "Health: " + Health + "/" + MaxHealth, new Vector2(centre.X - rectangle.Width / 2 + 160, (centre.Y - rectangle.Height * 2 / 3 + 120)+15), Color.Orange);
-                    spriteBatch.DrawString(font, "Mana: " + Mana + "/" + MaxMana, new Vector2(centre.X - rectangle.Width / 2 + 160, (centre.Y - rectangle.Height * 2 / 3 + 120) + 15*2), Color.Orange);
+                    spriteBatch.Draw(barBack, new Vector2((int)(centre.X - rectangle.Width / 2 + 240), (int)(centre.Y - rectangle.Height * 2 / 3 + 126) + 15 * 2), Color.White);
+                    spriteBatch.Draw(manaBar, new Rectangle((int)(centre.X - rectangle.Width / 2 + 240), (int)(centre.Y - rectangle.Height * 2 / 3 + 126) + 15 * 2, (int)((float)Mana / (float)MaxMana * 165), 15), Color.White);
+                    spriteBatch.DrawString(font, "Mana:   " + Mana + "/" + MaxMana, new Vector2(centre.X - rectangle.Width / 2 + 160, (centre.Y - rectangle.Height * 2 / 3 + 120) + 15*2), Color.Orange);
                     spriteBatch.DrawString(font,"Strength: "+ Strength.ToString(), new Vector2(centre.X - rectangle.Width / 2 + 160, (centre.Y - rectangle.Height * 2 / 3 + 120) + 15 * 3), Color.Orange);
                     spriteBatch.DrawString(font, "MSpeed: " + MSpeed.ToString(), new Vector2(centre.X - rectangle.Width / 2 + 160, (centre.Y - rectangle.Height * 2 / 3 + 120) + 15 * 4), Color.Orange);
                     spriteBatch.DrawString(font, "ASpeed: " + ASpeed.ToString(), new Vector2(centre.X - rectangle.Width / 2 + 160, (centre.Y - rectangle.Height * 2 / 3 + 120) + 15 * 5), Color.Orange);

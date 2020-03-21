@@ -10,6 +10,7 @@ namespace Kuessaria
 {
     class Tiles// this is the tiles the character stands on
     {
+        public char tileChar;
         protected Texture2D texture;// this is the texture of the tile
 
         private Rectangle rectangle;//this is the rectangle the triangle is at
@@ -35,8 +36,10 @@ namespace Kuessaria
     }
     class CollisionTiles : Tiles//this is the collisiontiles class
     {
-        public CollisionTiles(int i, Rectangle newRectangle)//it is made differently in that its texture is taken from an int
+
+        public CollisionTiles(char i, Rectangle newRectangle)//it is made differently in that its texture is taken from an int
         {
+            tileChar = i;
             texture = Content.Load<Texture2D>("Blocks/Tile" + i);//it adds i onto the end of the filename to get either tile 1 2 or 3
             this.Rectangle = newRectangle;//and it sets the rectangle to the rectangle submitted
         }

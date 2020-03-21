@@ -2,7 +2,9 @@
 using Microsoft.Xna.Framework.Graphics;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
+using System.Net.Sockets;
 using System.Text;
 
 namespace Kuessaria
@@ -10,7 +12,7 @@ namespace Kuessaria
     class Enemy : EntitySprite
     {
         // The next values use encapsulation so they can be publicly obtained and set, they are all labelled self explainingly and thus only special ones will be commented
-        int Health;
+        public int Health;
         int MaxHealth;
         public int health
         {
@@ -20,7 +22,7 @@ namespace Kuessaria
         int Strength;
         float movetimer;// this float will hold the amount of time since the last movement action was set
         int moveinterval = 500;//this is how long of an interval it will wait before moving
-        int action;// this is a random number to decide which action will happen
+        public  int action;// this is a random number to decide which action will happen
         int spawntimer;// this is the timer that will determine if the slime exists yet or not
         int exist = 0;//it will not exist to begin with and thus exist will start at zero and wait until it is at spawntimer to exist
         bool passive;
@@ -47,7 +49,7 @@ namespace Kuessaria
             this.passive = passive;
         }
 
-        public void Update(GameTime gameTime, Map MAP, PlayerStats player)//this is the update method and takes in gameTime to determine time elapsed, the MAP for its width and height and the player for all their information
+        public void Update(GameTime gameTime, Map MAP, PlayerStats player, int id, TcpClient client)//this is the update method and takes in gameTime to determine time elapsed, the MAP for its width and height and the player for all their information
         {
             
             switch (currentSpawned)// this switch checks current spawned to see how it should update the sprite
@@ -68,7 +70,17 @@ namespace Kuessaria
                             player.mana = MaxHealth/2 + player.intelligence;//add mana to the player bsaed on the monsters health and the players intelligence
                             MaxHealth += 10;//increase the monsters max health
                             Health = MaxHealth;// set the monsters health to its new max health
-                            
+
+                            MemoryStream writeStream = new MemoryStream();
+                            BinaryWriter writer = new BinaryWriter(writeStream);
+                            writeStream.Position = 0;
+                            writer.Write((byte)Protocol.enemyDied);
+                            writer.Write(Convert.ToInt32(id));
+                            writer.Write(Position.X);
+                            writer.Write(Position.Y);
+                            writer.Write(Convert.ToInt32(action));
+                            writer.Write(Convert.ToInt32(health));
+                            SendData(GetDataFromMemoryStream(writeStream), client);
                         }
                         if (player.experience >= player.Level * 100)// if the players experience is greater than the players level*100 it will level up the player
                         {
@@ -117,18 +129,12 @@ namespace Kuessaria
         {
             
 
-            movetimer += (float)gameTime.ElapsedGameTime.TotalMilliseconds / 2;// counts how many milliseconds have passed 
-            if (movetimer > moveinterval)// if the milliseconds passed is larger tahn the wait interval
-            {
-                this.action = rng.Next(0, 100);//it will make a new random action
-                movetimer = 0;// and set the movetime back to 0
-            }
-            if (this.action < 33)//if the rng was less than 33, it will move right just like a player
+            if (action < 33)//if the rng was less than 33, it will move right just like a player
             {
                 AnimateRight(gameTime);//this animates it so it moves right
                 velocity.X = 4;// this actually makes it move right
             }
-            else if (this.action > 33 && action < 66)//if its between 33 and 66
+            else if (action > 33 && action < 66)//if its between 33 and 66
             {
                 AnimateLeft(gameTime);// it moves left
                 velocity.X = -4;
@@ -176,7 +182,7 @@ namespace Kuessaria
                 velocity.Y += 0.4f;//gravity, is a factor of 0.4f
 
         }
-        public void CollisionPlayer(PlayerStats player)//This method checks collision between the enemy and the player
+        public void CollisionPlayer(PlayerStats player, TcpClient client)//This method checks collision between the enemy and the player
         {
             if (player.health <= 0)//if the enemy kills the player, it will 
             {
@@ -194,7 +200,15 @@ namespace Kuessaria
                     player.velocity.X += 10;//sets the players velocity to move slightly right
                     player.velocity.Y -= 10;// and knocks the player slightly up
 
-
+                    MemoryStream writeStream = new MemoryStream();
+                    BinaryWriter writer = new BinaryWriter(writeStream);
+                    writeStream.Position = 0;
+                    writer.Write((byte)Protocol.playerHit);
+                    writer.Write(this.velocity.X);
+                    writer.Write(this.velocity.Y);
+                    writer.Write(Convert.ToInt32(this.Position.X));
+                    writer.Write(Convert.ToInt32(this.Position.Y));
+                    SendData(GetDataFromMemoryStream(writeStream), client);
 
                 }
                 else if (velocity.X <= 0)//if the velocity is lessthan or equal to 0 meaning the enemy is moving left
@@ -204,12 +218,20 @@ namespace Kuessaria
                     player.velocity.X -= 10;//and knocks the player left
                     player.velocity.Y -= 10;// and up
 
-
+                    MemoryStream writeStream = new MemoryStream();
+                    BinaryWriter writer = new BinaryWriter(writeStream);
+                    writeStream.Position = 0;
+                    writer.Write((byte)Protocol.playerHit);
+                    writer.Write(this.velocity.X);
+                    writer.Write(this.velocity.Y);
+                    writer.Write(Convert.ToInt32(this.Position.X));
+                    writer.Write(Convert.ToInt32(this.Position.Y));
+                    SendData(GetDataFromMemoryStream(writeStream), client);
                 }
             }
 
         }
-        public void SlimeCollision(Weapon sword, PlayerStats player)// this checks to see if the enemy is colliding with a sword
+        public void SlimeCollision(Weapon sword, PlayerStats player, int id, TcpClient client)// this checks to see if the enemy is colliding with a sword
         {
             if (sword.POSRect.Intersects(POSRect) && sword.swinged == true && hit == false )//if the swords rectangle is intersecting the slimes, and the sword is being swung, and the slime hasnt been hit recently
             {
@@ -221,13 +243,11 @@ namespace Kuessaria
                     if (sword.SWUNG == Weapon.swung.left)// if the sword was swung to the left
                     {
                         action = 40;//sets the slime action to 40, making it run away to the left
-                        movetimer = 0;//sets movetimer to 0 so that it doesnt instantly turn back around
 
                     }
                     if (sword.SWUNG == Weapon.swung.right)// this is the same but makes the action run to the right
                     {
                         action = 20;
-                        movetimer = 0;
 
                     }
                 }
@@ -236,18 +256,31 @@ namespace Kuessaria
                     if (sword.SWUNG == Weapon.swung.left)// if the sword was swung to the left
                     {
                         action = 20;//sets the slime action to 20, making it run towards the enemy to the left
-                        movetimer = 0;//sets movetimer to 0 so that it doesnt instantly turn back around
 
                     }
                     if (sword.SWUNG == Weapon.swung.right)// this is the same but makes the action run to the right
                     {
                         action = 40;
-                        movetimer = 0;
 
                     }
                 }
-                hit = true;//sets the slimes hit boolean to true
-                hitTimer = 60;// and the time before it can get hit again to 60
+
+                if (Health > 0)
+                {
+                    MemoryStream writeStream = new MemoryStream();
+                    BinaryWriter writer = new BinaryWriter(writeStream);
+                    writeStream.Position = 0;
+                    writer.Write((byte)Protocol.enemyHit);
+                    writer.Write(Convert.ToInt32(id));
+                    writer.Write(Position.X);
+                    writer.Write(Position.Y);
+                    writer.Write(Convert.ToInt32(action));
+                    writer.Write(Convert.ToInt32(Health));
+                    SendData(GetDataFromMemoryStream(writeStream), client);
+
+                    hit = true;//sets the slimes hit boolean to true
+                    hitTimer = 60;// and the time before it can get hit again to 60
+                }
             }
         }
     }

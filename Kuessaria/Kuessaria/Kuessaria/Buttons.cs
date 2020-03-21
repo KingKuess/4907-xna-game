@@ -1,4 +1,4 @@
-﻿using Microsoft.Xna.Framework;
+﻿ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using System;
@@ -13,7 +13,7 @@ namespace Kuessaria
         public Texture2D texture;//a texture that holds what the button looks like
         public Rectangle rectangle;//a rectangle that holds the buttons position,width,and height
         public Vector2 Position;// a position for the button
-      
+        public Vector2 viewBasedPOS;// a view based POS 
 
         Color color = new Color(255, 255, 255, 255);// colors so the button fades in and out of existence
 
@@ -30,10 +30,17 @@ namespace Kuessaria
         public void Update(MouseState mouse)// this is the update method that runs in the game1.update method
         {
             rectangle = new Rectangle((int)Position.X, (int)Position.Y, (int)size.X, (int)size.Y);// it makes the rectangle = to the position and size
+            Rectangle viewBasedRect = new Rectangle((int)viewBasedPOS.X, (int)viewBasedPOS.Y, (int)size.X, (int)size.Y);
+
+
 
             Rectangle mouseRectangle = new Rectangle(mouse.X, mouse.Y, 1, 1);//and makes the mouse rectangle around the mouse
+            //if (mouse.LeftButton == ButtonState.Pressed)
+            //{
+            //  System.Windows.Forms.MessageBox.Show("Mouse POS " + mouse.X + ", " + mouse.Y + "\n" + "ButtPOS " + viewBasedPOS.X + ", " + viewBasedPOS.Y);
+           // }
 
-            if(mouseRectangle.Intersects(rectangle))// it checks if the mouse rectangle and the button rectangle intersect
+            if (mouseRectangle.Intersects(viewBasedRect))// it checks if the mouse rectangle and the button rectangle intersect
             {
                 if (color.A == 255) down = false;//this makes colors go down if they are at the top of 255
                 if (color.A == 0) down = true;// this makes colors go up if they are at the bottom, 0
@@ -44,11 +51,17 @@ namespace Kuessaria
             {
                 color.A += 3;// it adds 3 to color
                 isclicked = false;// and sets clicked to false
+
             }
         }
         public void setPOS(Vector2 newPOS)//a method to set the position of the button
         {
             Position = newPOS;//sets the position to the newPOS 
+            viewBasedPOS = newPOS;     
+        }
+        public void setViewBasedPOS(Vector2 newpos)
+        {
+            viewBasedPOS = newpos;
         }
         public void Draw(SpriteBatch spriteBatch)// this just draws the button
         {

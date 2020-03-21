@@ -9,10 +9,17 @@ namespace Kuessaria
     {
         Disconnected = 0,
         Connected = 1,
-        MapSwitch = 2,
+        MapJoined = 2,
         Load = 3,
         PlayerMoved = 4,
         weaponCreated = 5,
-        enemyMoved = 6
+        enemyActionChanged = 6,
+        enemyHit = 7,
+        enemyDied = 8,
+        playerHit = 9,
+        enemyLoad = 10,
+        getNPCs = 11,
+        enemySync = 12,
+        npcLoad = 13
     }
 }
