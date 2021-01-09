@@ -22,14 +22,14 @@ namespace Kuessaria
     {
         //Networking attributes
         TcpClient client;
-        string IP = "192.168.0.11";
-        //string IP = "174.116.77.135";
+        string IP = "192.168.2.13";
         int PORT = 1490;
         int BUFFER_SIZE = 2048;
         byte[] readBuffer;
         MemoryStream readStream, writeStream;
         BinaryReader reader;
         BinaryWriter writer;
+        bool firstLoad = true;
 
         
         GraphicsDeviceManager graphics;//This is literally the graphics device running the game
@@ -247,6 +247,10 @@ namespace Kuessaria
         protected override void Update(GameTime gameTime)//this is the update method that runs alot every second and will constantly do anything in here
         {
 
+            if (firstLoad)
+            {
+                Console.WriteLine("TESTING TESTING 123 SERVER IP: " + IP);
+            }
 
             //Menu
             switch (CurrentGameState)//this is a switch that relies on currentgamestate
@@ -618,16 +622,17 @@ namespace Kuessaria
 
             GraphicsDevice.Clear(Color.White);//it clears the device every time it draws, which is constantly
 
-
+            
 
             switch (CurrentGameState)// the it uses a switch to determine what to draw based on state
             {
                 case GameState.MainMenu://if its the main menu
-                    spriteBatch.Begin();//This is so that it can begin drawing, and will be used multiple times
+                    spriteBatch.Begin();//This is so that it can begin drawing, and will be used multiple times                  
                     spriteBatch.Draw(Content.Load<Texture2D>("Backgrounds/MainMenu"), new Rectangle(0, 0, SWidth, SHeight), Color.White);// this draws the background
                     BPlay.Draw(spriteBatch);// this draws the buttons
                     BExit.Draw(spriteBatch);
                     BInst.Draw(spriteBatch);
+                    spriteBatch.DrawString(font, IP, new Vector2(GraphicsDevice.Viewport.Width - 10, GraphicsDevice.Viewport.Height - 10), Color.LimeGreen);
                     spriteBatch.End();//this marks the end of drawing
                     break;//break to mark end of case
                 case GameState.Instructions://this is the intructions gamestate

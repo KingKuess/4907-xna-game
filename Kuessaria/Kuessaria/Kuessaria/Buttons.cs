@@ -25,6 +25,7 @@ namespace Kuessaria
 
             size = new Vector2(graphics.Viewport.Width / (graphics.Viewport.Width / Wid), graphics.Viewport.Height / (graphics.Viewport.Height / Hei));// sets the vector2 size using width and height
         }
+
         bool down;//a boolean for checking if the button colors are going down or up
         public bool isclicked;//a boolean to check if the button is clicked or not
         public void Update(MouseState mouse)// this is the update method that runs in the game1.update method
